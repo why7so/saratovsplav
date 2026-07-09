@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://bwadwksnzcltbswktibs.supabase.co;">
+<title>FAQ — Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Unbounded:wght@300;400;700&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --forest: #2c4a2e;
+    --forest-light: #4a7c4e;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #5a5248;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+    padding-top: 5rem;
+  }
+
+  /* ── HERO ── */
+  .faq-hero {
+    padding: 10rem 4rem 5rem;
+    background:
+      linear-gradient(160deg, rgba(26,74,92,0.06) 0%, transparent 60%),
+      var(--white);
+    border-bottom: 1px solid rgba(26,74,92,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .faq-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 60px,
+      rgba(26,74,92,0.025) 60px, rgba(26,74,92,0.025) 61px
+    );
+    pointer-events: none;
+  }
+  .faq-hero-inner { position: relative; max-width: 760px; }
+  .faq-hero-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem; font-weight: 300;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--river-light);
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .faq-hero-label::before {
+    content: ''; display: block;
+    width: 32px; height: 1px;
+    background: var(--river-pale);
+  }
+  .faq-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.08;
+    color: var(--river); margin-bottom: 1.2rem;
+  }
+  .faq-hero h1 em { font-style: italic; color: var(--accent); }
+  .faq-hero-sub {
+    font-size: 1rem; font-weight: 300; line-height: 1.8;
+    color: var(--text-muted); max-width: 560px;
+  }
+
+  /* ── LAYOUT ── */
+  .faq-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem 7rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ── SIDEBAR NAV ── */
+  .faq-nav {
+    position: sticky; top: 6rem;
+  }
+  .faq-nav-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.58rem; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--river-pale);
+    margin-bottom: 1rem;
+  }
+  .faq-nav ul { list-style: none; }
+  .faq-nav ul li { margin-bottom: 0.25rem; }
+  .faq-nav ul a {
+    display: block;
+    font-size: 0.82rem; font-weight: 400;
+    color: var(--text-muted); text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-left: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .faq-nav ul a:hover { color: var(--river); border-left-color: var(--river-pale); }
+  .faq-nav ul a.active { color: var(--river); border-left-color: var(--river); font-weight: 600; }
+
+  /* ── CATEGORIES ── */
+  .faq-category { margin-bottom: 4rem; scroll-margin-top: 6rem; }
+  .faq-category-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.65rem; font-weight: 400;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--river-pale);
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(26,74,92,0.1);
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .faq-category-title::before {
+    content: '';
+    display: block; width: 20px; height: 1px;
+    background: var(--river-pale);
+  }
+
+  /* ── ACCORDION ── */
+  .faq-item {
+    border-bottom: 1px solid rgba(26,74,92,0.08);
+  }
+  .faq-question {
+    width: 100%; background: none; border: none; cursor: pointer;
+    padding: 1.4rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1.5rem; text-align: left;
+  }
+  .faq-question-text {
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.97rem; font-weight: 600;
+    color: var(--text); line-height: 1.5;
+    transition: color 0.2s;
+  }
+  .faq-item.open .faq-question-text { color: var(--river); }
+  .faq-question-icon {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border: 1.5px solid rgba(26,74,92,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, transform 0.3s;
+    color: var(--river);
+  }
+  .faq-item.open .faq-question-icon {
+    background: var(--river); border-color: var(--river);
+    color: var(--white); transform: rotate(45deg);
+  }
+  .faq-answer-wrap {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s ease;
+  }
+  .faq-item.open .faq-answer-wrap { grid-template-rows: 1fr; }
+  .faq-answer-inner { overflow: hidden; }
+  .faq-answer {
+    padding: 0 0 1.6rem;
+    font-size: 0.9rem; font-weight: 300; line-height: 1.9;
+    color: var(--text-muted);
+  }
+  .faq-answer strong { font-weight: 600; color: var(--text); }
+  .faq-answer ul, .faq-answer ol { padding-left: 1.4rem; margin-top: 0.6rem; }
+  .faq-answer li { margin-bottom: 0.4rem; }
+  .faq-answer a { color: var(--river-light); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── CTA BLOCK ── */
+  .faq-cta {
+    margin-top: 1rem;
+    padding: 2.5rem 2.8rem;
+    background: var(--river);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+  .faq-cta-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+  .faq-cta-text p {
+    font-size: 0.87rem; font-weight: 300;
+    color: var(--river-pale); line-height: 1.6;
+  }
+  .faq-cta-btn {
+    display: inline-block;
+    background: var(--white); color: var(--river);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.85rem 2rem; border-radius: 2px;
+    text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .faq-cta-btn:hover { background: var(--sand); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text);
+    padding: 4rem 4rem 2rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+  }
+  .footer-brand p {
+    font-size: 0.85rem; font-weight: 300;
+    color: rgba(253,250,245,0.45);
+    line-height: 1.8; margin-top: 1rem; max-width: 280px;
+  }
+  .footer-col h5 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(168,216,232,0.5); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul a {
+    font-size: 0.85rem; font-weight: 300;
+    color: rgba(253,250,245,0.55);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--river-pale); }
+  .footer-col ul a.current { color: var(--river-pale); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: rgba(253,250,245,0.25);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .faq-hero { padding: 8rem 1.5rem 3rem; }
+    .faq-body { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem 5rem; }
+    .faq-nav { display: none; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 540px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .faq-cta { padding: 2rem 1.5rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<!-- HERO -->
+<div class="faq-hero">
+  <div class="faq-hero-inner">
+    <p class="faq-hero-label">Частые вопросы</p>
+    <h1>Всё, что нужно<br>знать <em>до</em> старта</h1>
+    <p class="faq-hero-sub">Собрали ответы на самые частые вопросы о подготовке, снаряжении, безопасности и организации сплавов.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="faq-body">
+
+  <!-- Боковая навигация по категориям -->
+  <aside class="faq-nav">
+    <p class="faq-nav-label">Разделы</p>
+    <ul>
+      <li><a href="#cat-preparation" class="active">Подготовка</a></li>
+      <li><a href="#cat-gear">Снаряжение</a></li>
+      <li><a href="#cat-safety">Безопасность</a></li>
+      <li><a href="#cat-routes">Маршруты</a></li>
+      <li><a href="#cat-booking">Запись и оплата</a></li>
+    </ul>
+  </aside>
+
+  <!-- Вопросы -->
+  <main>
+
+    <!-- ПОДГОТОВКА -->
+    <div class="faq-category" id="cat-preparation">
+      <p class="faq-category-title">Подготовка</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Нужна ли физическая подготовка?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Специальной подготовки не требуется — большинство наших маршрутов рассчитаны на обычных людей без опыта. Вы будете грести на байдарках в умеренном темпе, с достаточным количеством привалов. Достаточно уметь плавать и быть готовым к активному отдыху на свежем воздухе. Если у вас есть хронические заболевания сердца или суставов — уточните у нас заранее, подберём подходящий маршрут.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">С какого возраста можно участвовать?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Принимаем участников от <strong>7 лет</strong> при наличии сопровождающего родителя или опекуна. Дети до 14 лет плывут в одном байдарке со взрослым. Для групп с детьми выбираем более спокойные участки рек с минимальным течением. Верхнего возрастного ограничения нет — у нас регулярно участвуют люди старше 60 лет.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Что взять с собой на многодневный сплав?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Мы предоставляем всё групповое снаряжение: байдарки, вёсла, каски, спасжилеты, палатки, котлы, аптечку. Вам нужно взять:
+            <ul>
+              <li>Сменную одежду из расчёта «намокнешь хотя бы раз в день»</li>
+              <li>Непромокаемую куртку или дождевик</li>
+              <li>Тёплый слой — ночью у реки прохладно даже летом</li>
+              <li>Закрытую обувь для берега (сандалии или старые кроссовки)</li>
+              <li>Солнцезащитный крем, головной убор, очки</li>
+              <li>Личную аптечку с привычными лекарствами</li>
+              <li>Спальник — если не арендуете наш</li>
+            </ul>
+            Полный список снаряжения мы высылаем на почту после записи.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Кормят ли на сплаве?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Да, питание включено в стоимость многодневных сплавов. Готовим на костре — каши, супы, тушёнку, чай. Если у вас есть аллергии или вегетарианское/веганское питание — сообщите при записи, адаптируем меню. На однодневных сплавах питание не включено, берите еду с собой.
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- СНАРЯЖЕНИЕ -->
+    <div class="faq-category" id="cat-gear">
+      <p class="faq-category-title">Снаряжение</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Предоставляете ли вы байдарки и вёсла?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Да, всё групповое снаряжение входит в стоимость: надувные байдарки <strong>Стрела-3</strong> на 2–3 человека, двухлопастные вёсла, спасательные жилеты и каски на каждого участника. Байдарки простые в управлении — перевернуться на них значительно сложнее, чем на туристических каноэ.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Можно ли взять собственное снаряжение?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Конечно. Если у вас есть своя байдарка или каяк — берите. Только предупредите заранее, чтобы мы учли это при организации стоянок и логистики. Спасжилет и каску рекомендуем всё равно взять наши — они сертифицированы и проверены.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Есть ли аренда спальников и палаток?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Да, групповые палатки (2–3 местные) входят в базовую стоимость — по одной на 2–3 человека. Спальники можно арендовать отдельно — <strong>400 ₽ / сутки</strong>. Количество ограничено, поэтому бронируйте заранее. Если хотите свою палатку — привозите.
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- БЕЗОПАСНОСТЬ -->
+    <div class="faq-category" id="cat-safety">
+      <p class="faq-category-title">Безопасность</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Насколько опасно переворачиваться на байдарке?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Наши байдарки надувные и очень устойчивые — самопроизвольное переворачивание крайне редко. Все участники едут в спасжилетах. Маршруты проходят по равнинным рекам без порогов и сильных течений — максимум 1–2 км/ч на Медведице, чуть быстрее на Хопре в половодье. Даже если кто-то окажется в воде — это скорее весело, чем опасно: глубина на большинстве стоянок по грудь.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Что делать, если нет страховки или она не покрывает водный туризм?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Страховка — ваша личная ответственность. Мы рекомендуем оформить туристическую страховку с покрытием активного отдыха — стоит она недорого (300–600 ₽ на маршрут) и даёт спокойствие. Группа работает с нашей организационной ответственностью за оборудование и инструктаж; гражданская ответственность за личное имущество и здоровье остаётся на участнике.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Есть ли инструктор в каждой группе?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Да. Каждую группу сопровождает <strong>минимум один опытный инструктор</strong> — человек с разрядом по туризму и опытом от 5 лет. В группах от 12 человек — двое. Инструктор идёт замыкающим, следит за группой и организует стоянки. Перед стартом всегда проводится инструктаж по технике гребли и правилам поведения на воде.
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- МАРШРУТЫ -->
+    <div class="faq-category" id="cat-routes">
+      <p class="faq-category-title">Маршруты</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Чем отличается Медведица от Хопра?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            <strong>Медведица</strong> — более спокойная, с живописными поймами и смешанными лесами. Хороший выбор для первого сплава или семей с детьми. Течение мягкое, берега доступные.<br><br>
+            <strong>Хопёр</strong> — чуть более динамичный, с крутыми берегами, родниками и богатой природой. Хопёр входит в список чистейших рек Европы. Больше подходит тем, кто хочет более «дикого» опыта и не против немного поработать веслом.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Когда лучший сезон для сплава?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Мы работаем с <strong>июня по август</strong>. Оптимальный период — <strong>конец июня — середина июля</strong>: вода прогрета до 22–25°C, уровень реки комфортный, комаров меньше, чем в мае. В августе тоже хорошо — вода тёплая, меньше людей на берегах, ночи уже прохладнее. В жаркий июль бывает мелководье на отдельных участках Медведицы — это не мешает сплаву, просто иногда приходится нести байдарку 20–30 метров.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Можно ли заказать индивидуальный маршрут?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Да, для групп от <strong>6 человек</strong> можно согласовать индивидуальные даты и скорректировать маршрут — длину, стоянки, уровень сложности. Пишите нам в <a href="https://t.me/cplavsmariei" target="_blank" rel="noopener">Telegram</a> или через форму на сайте — обсудим детали. Для корпоративных групп и командных выездов есть отдельные предложения.
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ЗАПИСЬ И ОПЛАТА -->
+    <div class="faq-category" id="cat-booking">
+      <p class="faq-category-title">Запись и оплата</p>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Как записаться на сплав?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Заполните форму на <a href="index.html#booking">главной странице</a> — укажите имя, телефон, желаемый сплав и дату. Мы свяжемся с вами в течение 24 часов для подтверждения. Также можно написать напрямую в <a href="https://t.me/cplavsmariei" target="_blank" rel="noopener">Telegram</a> или позвонить по номеру, указанному на сайте.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Когда и как нужно оплатить?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Бронирование закрепляется предоплатой — <strong>30% от стоимости</strong> в течение 3 дней после подтверждения. Остаток оплачивается в день старта наличными или переводом. Реквизиты для предоплаты высылаем в переписке. Чек и договор — по запросу.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Что будет, если я отменю бронирование?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            <ul>
+              <li><strong>Более чем за 14 дней</strong> до старта — возврат предоплаты в полном объёме.</li>
+              <li><strong>За 7–14 дней</strong> — возврат 50% предоплаты.</li>
+              <li><strong>Менее чем за 7 дней</strong> — предоплата не возвращается, но можно перенести на другую дату в текущем сезоне.</li>
+            </ul>
+            Если мы отменяем сплав по нашим причинам — возврат 100% в течение 3 дней.
+          </div>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span class="faq-question-text">Отменяете ли сплав из-за дождя?</span>
+          <span class="faq-question-icon">
+            <svg viewBox="0 0 14 14" width="10" height="10" fill="currentColor"><path d="M7 2v10M2 7h10"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer-wrap"><div class="faq-answer-inner">
+          <div class="faq-answer">
+            Нет. Дождь — это часть похода, и многие участники считают его одним из лучших воспоминаний. Мы отменяем или переносим сплав только при <strong>штормовом предупреждении</strong> (ветер от 15 м/с и выше) или гидрологических ограничениях на реке. В таких случаях уведомляем за 12–24 часа и предлагаем перенос или возврат.
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="faq-cta">
+      <div class="faq-cta-text">
+        <h3>Остались вопросы?</h3>
+        <p>Напишите нам в Telegram или оставьте заявку — ответим в течение дня.</p>
+      </div>
+      <a href="index.html#booking" class="faq-cta-btn">Записаться на сплав</a>
+    </div>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="СПЛАВ" style="width:48px;height:48px;">
+        <span class="logo-text">Сплав</span>
+      </a>
+      <p>Туристические сплавы по рекам Медведице и Хопру. Саратовская область.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Сплавы</h5>
+      <ul>
+        <li><a href="index.html#tours">Медведица</a></li>
+        <li><a href="index.html#tours">Хопёр</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Информация</h5>
+      <ul>
+        <li><a href="index.html#rivers">О реках</a></li>
+        <li><a href="index.html#calendar">Сезоны</a></li>
+        <li><a href="index.html#about">Снаряжение</a></li>
+        <li><a href="index.html#reviews">Отзывы</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Контакты</h5>
+      <ul>
+        <li><a href="tel:+79173231519">+7 (917) 323-15-19</a></li>
+        <li><a href="mailto:info@saratovsplav.ru">info@saratovsplav.ru</a></li>
+        <li><a href="https://vk.com/pro_splav" rel="noopener noreferrer" target="_blank">ВКонтакте</a></li>
+        <li><a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank">Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Сплав. Все права защищены.</span>
+    <span><a href="privacy.html" style="color:inherit;opacity:0.7;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+<script src="js/nav-mobile.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/faq.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>

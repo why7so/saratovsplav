@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com https://bwadwksnzcltbswktibs.supabase.co; connect-src https://bwadwksnzcltbswktibs.supabase.co https://accounts.google.com;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мой профиль — Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Unbounded:wght@300;400;600;700&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --forest: #2c4a2e;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #5a5248;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+    --border: #e0d5c4;
+    --danger: #a63f2e;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    padding-top: 5rem;
+    display: flex; flex-direction: column;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .profile-page {
+    flex: 1; max-width: 620px; width: 100%;
+    margin: 0 auto; padding: 2.6rem 1.5rem 4rem;
+    display: flex; flex-direction: column; gap: 1.6rem;
+  }
+
+  /* ── IDENTITY CARD (hero) ── */
+  .identity-card {
+    background: var(--river);
+    background-image: linear-gradient(155deg, var(--river) 0%, #123844 100%);
+    border-radius: 16px;
+    padding: 1.9rem 1.9rem 1.6rem;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .identity-eyebrow {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.66rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--river-pale);
+    display: block; margin-bottom: 1.1rem;
+  }
+  .identity-main { display: flex; align-items: center; gap: 1.1rem; }
+
+  /* Life-ring avatar: a nod to the river — a striped buoy ring around your initials */
+  .lifering {
+    width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+    padding: 4px; position: relative;
+    background: repeating-conic-gradient(var(--accent) 0deg 28deg, var(--white) 28deg 56deg);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .profile-avatar {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: var(--river);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 1.15rem;
+    border: 2px solid var(--river);
+    overflow: hidden; position: relative;
+  }
+  .avatar-img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+  }
+
+  .avatar-edit-btn {
+    position: absolute; right: -3px; bottom: -3px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent); color: #fff; border: 2px solid var(--river);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0; transition: background 0.15s, transform 0.15s;
+  }
+  .avatar-edit-btn svg { width: 13px; height: 13px; }
+  .avatar-edit-btn:hover { background: #9c3d1f; transform: scale(1.06); }
+  .avatar-edit-btn:disabled { background: var(--sand-dark); cursor: default; transform: none; }
+  .avatar-msg {
+    font-size: 0.78rem; color: var(--river-pale); margin-top: 0.7rem;
+    min-height: 1.1em;
+  }
+  .avatar-msg.err { color: #f0a898; }
+  .avatar-info { flex: 1; min-width: 0; }
+  .avatar-name {
+    font-family: 'Unbounded', sans-serif; font-weight: 600;
+    font-size: 1.25rem; line-height: 1.3; color: var(--white);
+  }
+  .avatar-login {
+    font-size: 0.82rem; color: var(--river-pale); margin-top: 0.25rem;
+    letter-spacing: 0.02em;
+  }
+
+  .identity-card .btn-link { color: var(--river-pale); }
+  .identity-card .btn-link:hover { color: #fff; }
+  .identity-card .edit-form { margin: 1.3rem 0 0; }
+
+  /* ── TABS (segmented, pill) ── */
+  .profile-sidebar { width: 100%; }
+  .sidebar-nav {
+    list-style: none; display: flex; gap: 0.3rem;
+    background: var(--sand); border-radius: 999px; padding: 0.3rem;
+  }
+  .sidebar-nav li { flex: 1; margin: 0; }
+  .sidebar-nav a {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.62rem 0.7rem; border-radius: 999px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--stone); text-decoration: none;
+    transition: background 0.18s, color 0.18s; cursor: pointer;
+  }
+  .sidebar-nav a svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .sidebar-nav a:hover { color: var(--river); }
+  .sidebar-nav a.active { background: var(--river); color: #fff; }
+
+  /* ── CONTENT ── */
+  .profile-content { display: flex; flex-direction: column; gap: 1.6rem; }
+  .profile-panel {
+    background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden;
+  }
+  .panel-hidden { display: none; }
+
+  .panel-title {
+    font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--river);
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── PROFILE ROW ── */
+  .profile-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.05rem 1.5rem; border-bottom: 1px solid var(--border);
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .row-label {
+    width: 130px; flex-shrink: 0;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem; font-weight: 600; color: var(--stone);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .row-value { flex: 1; font-size: 0.92rem; color: var(--text); }
+  .row-value.muted { color: var(--stone); }
+  .row-action { margin-left: auto; flex-shrink: 0; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    padding: 0.2rem 0.5rem; border-radius: 4px;
+    background: var(--sand); color: var(--stone);
+    letter-spacing: 0.04em; text-transform: uppercase; margin-left: 0.4rem;
+  }
+
+  /* ── PROVIDER ICON ── */
+  .provider-row { display: flex; align-items: center; gap: 0.6rem; }
+  .provider-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--river); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .provider-icon.google { background: #fff; border: 1px solid var(--border); }
+  .provider-icon svg { width: 14px; height: 14px; }
+
+  /* ── BUTTONS ── */
+  .btn-link {
+    background: none; border: none; cursor: pointer; padding: 0;
+    font-family: 'Mulish', sans-serif; font-size: 0.84rem;
+    font-weight: 700; color: var(--accent); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .btn-link:hover { color: #9c3d1f; text-decoration: underline; text-underline-offset: 2px; }
+  .btn-link.danger { color: var(--danger); }
+  .btn-link.danger:hover { color: #832f22; }
+
+  /* ── INLINE EDIT FORM ── */
+  .edit-form {
+    background: var(--cream); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.2rem 1.5rem; margin: 0.2rem 1.5rem 1rem;
+    display: none;
+  }
+  .edit-form.open { display: block; }
+  .edit-form-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.68rem; font-weight: 600; color: var(--river); margin-bottom: 1rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .edit-field label {
+    display: block; font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem; font-weight: 600;
+    color: var(--stone); margin-bottom: 0.4rem; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .edit-field input {
+    width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--white); color: var(--text);
+    font-family: 'Mulish', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.2s;
+  }
+  .edit-field input:focus { outline: none; border-color: var(--river-light); }
+  .edit-full { grid-column: 1 / -1; }
+  .edit-actions { display: flex; gap: 0.6rem; margin-top: 1rem; }
+  .btn-save {
+    padding: 0.62rem 1.3rem; background: var(--river); color: #fff;
+    border: none; border-radius: 999px; cursor: pointer;
+    font-family: 'Mulish', sans-serif; font-size: 0.85rem; font-weight: 700;
+    transition: background 0.2s;
+  }
+  .btn-save:hover { background: var(--river-light); }
+  .btn-save:disabled { background: var(--sand-dark); cursor: default; }
+  .btn-cancel {
+    padding: 0.62rem 1.1rem; background: transparent; color: var(--stone);
+    border: 1px solid var(--border); border-radius: 999px; cursor: pointer;
+    font-family: 'Mulish', sans-serif; font-size: 0.85rem; font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-cancel:hover { background: var(--sand); }
+
+  .edit-msg { font-size: 0.8rem; margin-top: 0.6rem; }
+  .edit-msg.ok { color: #2e7d32; }
+  .edit-msg.err { color: var(--danger); }
+
+  /* ── DANGER ZONE ── */
+  .danger-zone {
+    border: 1px dashed #d6a89c; border-radius: 12px;
+    padding: 1.2rem 1.5rem; margin: 1.2rem 1.5rem;
+    background: #fdf6f4;
+  }
+  .danger-zone-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.66rem; font-weight: 600; color: var(--danger);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem;
+  }
+  .danger-zone p { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 0.9rem; line-height: 1.5; }
+
+  /* ── DELETE-ACCOUNT MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 9500;
+    background: rgba(20, 24, 22, 0.55);
+    align-items: center; justify-content: center; padding: 1.2rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--white); border-radius: 14px; max-width: 400px; width: 100%;
+    padding: 1.8rem 1.6rem; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+  .modal-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #fdf0ed; color: var(--danger);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .modal-icon svg { width: 22px; height: 22px; }
+  .modal-title {
+    font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 1rem;
+    color: var(--text); margin-bottom: 0.7rem;
+  }
+  .modal-text { font-size: 0.86rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 1rem; }
+  .modal-text strong { color: var(--danger); }
+  .modal-input {
+    width: 100%; padding: 0.65rem 0.8rem; border: 1px solid var(--border);
+    border-radius: 8px; background: var(--cream); color: var(--text);
+    font-family: 'Mulish', sans-serif; font-size: 0.92rem; margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+  .modal-input:focus { outline: none; border-color: var(--danger); }
+  .modal-msg { font-size: 0.8rem; color: var(--danger); min-height: 1.1em; margin-bottom: 0.4rem; }
+  .modal-actions { display: flex; gap: 0.6rem; margin-top: 0.6rem; }
+  .modal-actions button { flex: 1; }
+  .btn-save.danger { background: var(--danger); }
+  .btn-save.danger:hover { background: #832f22; }
+  .btn-save.danger:disabled { background: var(--sand-dark); }
+
+  .profile-loading .btn-retry {
+    padding: 0.6rem 1.2rem; background: var(--river); color: #fff;
+    border: none; border-radius: 999px; cursor: pointer;
+    font-family: 'Mulish', sans-serif; font-size: 0.85rem; font-weight: 700;
+    display: none;
+  }
+  .profile-loading.err .btn-retry { display: inline-block; }
+
+  /* ── LOADING ── */
+  .profile-loading {
+    flex: 1; display: flex; flex-direction: column; gap: 1rem;
+    align-items: center; justify-content: center;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.9rem; color: var(--stone);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 700px) {
+    .profile-page { padding: 1.8rem 1.1rem 3rem; }
+    .identity-card { padding: 1.5rem 1.4rem 1.3rem; }
+    .avatar-name { font-size: 1.05rem; }
+    .row-label { width: 96px; font-size: 0.58rem; }
+    .edit-grid { grid-template-columns: 1fr; }
+    .danger-zone, .edit-form { margin: 0.5rem 1rem; }
+    .sidebar-nav a { font-size: 0.6rem; padding: 0.55rem 0.4rem; gap: 0.3rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<!-- Редирект если не залогинен — показываем пока загружаем -->
+<div class="profile-loading" id="profile-loading">
+  <span id="profile-loading-text">Загружаем профиль…</span>
+  <button class="btn-retry" id="btn-loading-retry">Повторить</button>
+</div>
+
+<div class="profile-page" id="profile-page" style="display:none">
+
+  <!-- Личная карточка — как путевой лист участника сплава -->
+  <div class="identity-card">
+    <span class="identity-eyebrow">Личный кабинет</span>
+    <div class="identity-main">
+      <div class="lifering">
+        <div class="profile-avatar" id="p-avatar">
+          <img class="avatar-img" id="p-avatar-img" alt="" style="display:none">
+          <span id="p-avatar-initials">—</span>
+        </div>
+        <button class="avatar-edit-btn" id="btn-change-avatar" type="button" aria-label="Изменить фото">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13.5" r="3.2"/></svg>
+        </button>
+        <input type="file" id="avatar-file-input" accept="image/png,image/jpeg,image/webp" style="display:none">
+      </div>
+      <div class="avatar-info">
+        <div class="avatar-name" id="p-name">—</div>
+        <div class="avatar-login" id="p-login">—</div>
+      </div>
+      <div class="row-action">
+        <button class="btn-link" id="btn-edit-profile">Изменить</button>
+      </div>
+    </div>
+    <div class="avatar-msg" id="avatar-msg"></div>
+
+    <!-- Форма редактирования имени -->
+    <div class="edit-form" id="form-edit-profile">
+      <div class="edit-form-title">Изменить профиль</div>
+      <div class="edit-grid">
+        <div class="edit-field">
+          <label for="edit-name">Имя</label>
+          <input type="text" id="edit-name" placeholder="Имя" autocomplete="given-name">
+        </div>
+        <div class="edit-field">
+          <label for="edit-surname">Фамилия</label>
+          <input type="text" id="edit-surname" placeholder="Фамилия" autocomplete="family-name">
+        </div>
+      </div>
+      <div class="edit-actions">
+        <button class="btn-save" id="btn-save-profile">Сохранить</button>
+        <button class="btn-cancel" id="btn-cancel-profile">Отмена</button>
+      </div>
+      <div class="edit-msg" id="msg-profile"></div>
+    </div>
+
+  </div>
+
+  <!-- Вкладки -->
+  <aside class="profile-sidebar">
+    <ul class="sidebar-nav">
+      <li>
+        <a href="#" class="active" id="tab-profile" data-tab="profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Профиль
+        </a>
+      </li>
+      <li>
+        <a href="#" id="tab-security" data-tab="security">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.6 9.7-8 11C7.6 21.7 4 17 4 12V6l8-4z"/></svg>
+          Безопасность
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Содержимое -->
+  <div class="profile-content">
+
+    <!-- ═══ ПАНЕЛЬ: ПРОФИЛЬ ═══ -->
+    <div class="profile-panel" id="panel-profile">
+      <div class="panel-title">Данные профиля</div>
+
+      <!-- Email -->
+      <div class="profile-row">
+        <div class="row-label">Email</div>
+        <div class="row-value" id="p-email">—</div>
+      </div>
+
+      <!-- Логин -->
+      <div class="profile-row">
+        <div class="row-label">Логин</div>
+        <div class="row-value muted" id="p-login-row">—</div>
+      </div>
+
+      <!-- Способ входа -->
+      <div class="profile-row">
+        <div class="row-label">Способ входа</div>
+        <div class="row-value">
+          <div class="provider-row" id="p-provider">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ПАНЕЛЬ: БЕЗОПАСНОСТЬ ═══ -->
+    <div class="profile-panel panel-hidden" id="panel-security">
+      <div class="panel-title">Безопасность</div>
+
+      <!-- Смена пароля -->
+      <div class="profile-row">
+        <div class="row-label">Пароль</div>
+        <div class="row-value muted" id="p-pass-hint">Установлен при регистрации</div>
+        <div class="row-action">
+          <button class="btn-link" id="btn-edit-password">Изменить</button>
+        </div>
+      </div>
+
+      <!-- Форма смены пароля -->
+      <div class="edit-form" id="form-edit-password">
+        <div class="edit-form-title">Изменить пароль</div>
+        <div class="edit-grid">
+          <div class="edit-field edit-full">
+            <label for="edit-pass-new">Новый пароль</label>
+            <input type="password" id="edit-pass-new" placeholder="Минимум 6 символов" autocomplete="new-password">
+          </div>
+          <div class="edit-field edit-full">
+            <label for="edit-pass-confirm">Повторите пароль</label>
+            <input type="password" id="edit-pass-confirm" placeholder="Повторите пароль" autocomplete="new-password">
+          </div>
+        </div>
+        <div class="edit-actions">
+          <button class="btn-save" id="btn-save-password">Сохранить</button>
+          <button class="btn-cancel" id="btn-cancel-password">Отмена</button>
+        </div>
+        <div class="edit-msg" id="msg-password"></div>
+      </div>
+
+      <!-- Выход -->
+      <div class="profile-row">
+        <div class="row-label">Сессия</div>
+        <div class="row-value muted">Вы вошли на этом устройстве</div>
+        <div class="row-action">
+          <button class="btn-link" id="btn-logout">Выйти</button>
+        </div>
+      </div>
+
+      <!-- Удаление аккаунта -->
+      <div class="danger-zone">
+        <div class="danger-zone-title">Опасная зона</div>
+        <p>Удаление аккаунта необратимо. Все ваши данные, отзывы и заявки будут удалены без возможности восстановления.</p>
+        <button class="btn-link danger" id="btn-delete-account">Удалить аккаунт</button>
+      </div>
+    </div>
+
+  </div><!-- /profile-content -->
+</div><!-- /profile-page -->
+
+<!-- Модальное окно подтверждения удаления аккаунта -->
+<div class="modal-overlay" id="delete-modal-overlay">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    </div>
+    <div class="modal-title" id="delete-modal-title">Удалить аккаунт навсегда?</div>
+    <p class="modal-text">
+      Это действие необратимо. Будут удалены ваш профиль, все отзывы и вход по email/Google.
+      Чтобы подтвердить, введите слово <strong>УДАЛИТЬ</strong> в поле ниже.
+    </p>
+    <input type="text" class="modal-input" id="delete-confirm-input" placeholder="УДАЛИТЬ" autocomplete="off">
+    <div class="modal-msg" id="delete-modal-msg"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="btn-delete-cancel">Отмена</button>
+      <button class="btn-save danger" id="btn-delete-confirm" disabled>Удалить аккаунт</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/nav-mobile.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+<script src="js/profile.js"></script>
+<style>
+footer { background: #1a1a18; padding: 4rem 4rem 2rem; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+.footer-brand .logo { font-size: 1.3rem; }
+.footer-brand p { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.45); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+.footer-col h5 { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(168,216,232,0.5); margin-bottom: 1.2rem; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.7rem; }
+.footer-col ul a { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: #a8d8e8; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(253,250,245,0.25); }
+@media (max-width: 768px) { footer { padding: 3rem 1.5rem 1.5rem; } .footer-top { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 480px) { .footer-top { padding: 2.5rem 1rem; } .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1rem; font-size: 0.75rem; } }
+</style>
+</body>
+</html>

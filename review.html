@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com https://bwadwksnzcltbswktibs.supabase.co; connect-src https://bwadwksnzcltbswktibs.supabase.co;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Написать отзыв — Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #6b6560;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+    --border: #e0d8cc;
+    --input-bg: #faf7f2;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    padding-top: 5rem;
+  }
+
+
+  .main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .card {
+    width: 100%; max-width: 420px;
+    background: var(--white); border-radius: 16px; padding: 2.5rem;
+    box-shadow: 0 2px 4px rgba(26,74,92,0.04), 0 12px 40px rgba(26,74,92,0.08);
+    opacity: 0; transform: translateY(10px);
+    animation: cardIn 0.4s ease forwards;
+  }
+  @keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .user-badge {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding-bottom: 1.4rem; margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .user-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--river); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 0.9rem; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .user-badge-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+  .user-badge-email { font-size: 0.75rem; color: var(--stone); margin-top: 0.1rem; }
+  .logout-link {
+    margin-left: auto; font-size: 0.74rem; font-weight: 500; color: var(--stone);
+    background: none; border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.35rem 0.7rem; cursor: pointer; transition: all 0.2s;
+  }
+  .logout-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  .review-heading { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .review-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.4rem; }
+
+  .form-row { margin-bottom: 0.9rem; }
+  .form-row label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.4rem; }
+  .form-row select, .form-row textarea {
+    width: 100%; padding: 0.7rem 0.85rem; font-family: 'Inter', sans-serif; font-size: 0.88rem;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--input-bg); color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-row select:focus, .form-row textarea:focus { border-color: var(--river); background: var(--white); outline: none; }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+
+  .star-row { display: flex; gap: 2px; margin: 0.3rem 0 0.5rem; }
+  .star-btn { font-size: 1.6rem; cursor: pointer; background: none; border: none; padding: 0 2px; color: var(--border); transition: color 0.15s; line-height: 1; }
+  .star-btn.active { color: #c4a840; }
+
+  .msg-box { padding: 0.65rem 0.9rem; margin: 0.6rem 0; font-size: 0.82rem; border-radius: 6px; display: none; }
+  .msg-box.error { background: rgba(192,57,43,0.07); color: #a93226; border: 1px solid rgba(192,57,43,0.2); display: block; }
+  .msg-box.success { background: rgba(44,122,58,0.07); color: #1e6b2f; border: 1px solid rgba(44,122,58,0.2); display: block; }
+
+  .btn-submit {
+    width: 100%; padding: 0.85rem; margin-top: 0.4rem;
+    background: var(--river); color: var(--white); border: none; border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-submit:hover { background: var(--river-light); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { background: var(--sand-dark); cursor: default; transform: none; }
+
+  .back-to-site { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-size: 0.78rem; font-weight: 500; color: var(--stone); text-decoration: none; transition: color 0.2s; }
+  .back-to-site:hover { color: var(--river); }
+
+  /* Состояние "проверяем доступ" — показываем, пока не узнали, залогинен ли пользователь */
+  .checking { text-align: center; padding: 1rem 0; color: var(--text-muted); font-size: 0.85rem; }
+
+  @media (max-width: 480px) {
+    .card { padding: 1.6rem 1.2rem; border-radius: 12px; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<div class="main">
+  <div class="card" id="card">
+
+    <!-- Показывается, пока проверяем сессию -->
+    <div class="checking" id="checking-state">Проверяем доступ…</div>
+
+    <!-- Форма отзыва (показывается только залогиненным) -->
+    <div id="review-block" style="display:none;">
+      <div class="user-badge">
+        <div class="user-avatar" id="uav"></div>
+        <div>
+          <p class="user-badge-name" id="u-name"></p>
+          <p class="user-badge-email" id="u-email"></p>
+        </div>
+        <button class="logout-link" data-action="logout">Выйти</button>
+      </div>
+
+      <p class="review-heading">Ваш отзыв</p>
+      <p class="review-sub">Поделитесь впечатлениями — это займёт пару минут.</p>
+
+      <div class="form-row">
+        <label>Сплав</label>
+        <select id="rev-tour">
+          <option value="">— Выберите сплав —</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Оценка</label>
+        <div class="star-row">
+          <button class="star-btn active" data-v="1" data-action="set-star">★</button>
+          <button class="star-btn active" data-v="2" data-action="set-star">★</button>
+          <button class="star-btn active" data-v="3" data-action="set-star">★</button>
+          <button class="star-btn active" data-v="4" data-action="set-star">★</button>
+          <button class="star-btn active" data-v="5" data-action="set-star">★</button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Текст отзыва</label>
+        <textarea id="rev-text" placeholder="Расскажите о маршруте, гиде, природе, ощущениях..."></textarea>
+      </div>
+
+      <div class="msg-box" id="rev-msg"></div>
+      <button class="btn-submit" data-action="submit-review">Опубликовать отзыв</button>
+      <a href="index.html#reviews" class="back-to-site">← Вернуться к отзывам</a>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/nav-mobile.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/review.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+
+<style>
+footer { background: #1a1a18; padding: 4rem 4rem 2rem; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+.footer-brand .logo { font-size: 1.3rem; }
+.footer-brand p { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.45); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+.footer-col h5 { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(168,216,232,0.5); margin-bottom: 1.2rem; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.7rem; }
+.footer-col ul a { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: #a8d8e8; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(253,250,245,0.25); }
+@media (max-width: 768px) { footer { padding: 3rem 1.5rem 1.5rem; } .footer-top { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 480px) { .footer-top { padding: 2.5rem 1rem; } .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1rem; font-size: 0.75rem; } }
+</style>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo"><img src="img/logo.png" alt="СПЛАВ" style="width:48px;height:48px;"><span class="logo-text">Сплав</span></a>
+      <p>Туристические сплавы по рекам Медведице и Хопру. Саратовская область.</p>
+    </div>
+    <div class="footer-col"><h5>Сплавы</h5><ul><li><a href="index.html#tours">Медведица</a></li><li><a href="index.html#tours">Хопёр</a></li></ul></div>
+    <div class="footer-col"><h5>Информация</h5><ul><li><a href="index.html#rivers">О реках</a></li><li><a href="index.html#calendar">Сезоны</a></li><li><a href="index.html#about">Снаряжение</a></li><li><a href="index.html#reviews">Отзывы</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+    <div class="footer-col"><h5>Контакты</h5><ul><li><a href="tel:+79173231519">+7 (917) 323-15-19</a></li><li><a href="mailto:info@saratovsplav.ru">info@saratovsplav.ru</a></li><li><a href="https://vk.com/pro_splav" rel="noopener noreferrer" target="_blank">ВКонтакте</a></li><li><a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank">Telegram</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Сплав. Все права защищены.</span>
+    <span><a href="privacy.html" style="color:inherit;opacity:0.7;text-decoration:none;transition:opacity 0.2s;">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

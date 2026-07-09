@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://bwadwksnzcltbswktibs.supabase.co;">
+<script src="js/admin-redirect.js"></script>
+<title>404 — Страница не найдена | Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" class="site-icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Unbounded:wght@300;400;700&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --forest: #2c4a2e;
+    --forest-light: #4a7c4e;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #5a5248;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5rem;
+  }
+
+  /* ── 404 СЕКЦИЯ ── */
+  .notfound {
+    flex: 1;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 9rem 2rem 4rem;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .notfound::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 38%, rgba(168, 216, 232, 0.35) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* волны на фоне — зафиксированы внизу окна браузера, видны при любом скролле */
+  .wave {
+    position: fixed; left: 0; bottom: -2px; width: 100%; height: 110px;
+    z-index: 1;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 140' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C165,42 135,42 300,60 C465,78 435,78 600,60 C765,42 735,42 900,60 C1065,78 1035,78 1200,60 L1200,140 L0,140 Z' fill='%231a4a5c' fill-opacity='0.12'/%3E%3C/svg%3E");
+    background-size: 1200px 110px;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+    animation: waveScroll 18s linear infinite;
+    pointer-events: none;
+  }
+  .wave.wave2 {
+    opacity: 0.7;
+    animation-duration: 26s;
+    animation-direction: reverse;
+  }
+  .wave.wave1 { bottom: 18px; }
+  @keyframes waveScroll {
+    from { background-position: 0 bottom; }
+    to   { background-position: -1200px bottom; }
+  }
+
+  .notfound-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    text-align: center;
+  }
+
+  .nf-watermark {
+    position: absolute;
+    top: 48%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(9rem, 26vw, 16rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--river);
+    opacity: 0.06;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .nf-kayak {
+    width: 92px;
+    margin: 0 auto 1.8rem;
+    animation: drift 4s ease-in-out infinite;
+  }
+  .nf-kayak svg { width: 100%; height: auto; display: block; }
+  @keyframes drift {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  .nf-tag {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+
+  .nf-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .nf-text {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 2.2rem;
+  }
+
+  .nf-actions {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 2.6rem;
+  }
+  .nf-btn {
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.85rem 1.8rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .nf-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .nf-btn-primary { background: var(--river); color: var(--white); }
+  .nf-btn-primary:hover { background: var(--river-light); transform: translateY(-1px); }
+  .nf-btn-secondary { border: 1.5px solid var(--river); color: var(--river); }
+  .nf-btn-secondary:hover { background: var(--river); color: var(--white); }
+
+  .nf-links {
+    display: flex; gap: 1.6rem; justify-content: center; flex-wrap: wrap;
+    font-size: 0.82rem;
+  }
+  .nf-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--text-muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nf-links a:hover { color: var(--river); border-color: var(--river); }
+
+  @media (max-width: 480px) {
+    .notfound { padding: 7rem 1.2rem 3rem; }
+    .nf-actions { flex-direction: column; width: 100%; }
+    .nf-btn { width: 100%; justify-content: center; }
+    .nf-links { gap: 1rem 1.2rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<section class="notfound">
+  <div class="wave wave1"></div>
+  <div class="wave wave2"></div>
+  <div class="nf-watermark" aria-hidden="true">404</div>
+
+  <div class="notfound-inner">
+    <div class="nf-kayak">
+      <svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="60" cy="100" rx="22" ry="92" fill="#c4512a"/>
+        <ellipse cx="60" cy="100" rx="22" ry="92" fill="none" stroke="#9c3d1f" stroke-width="2"/>
+        <ellipse cx="60" cy="62" rx="11" ry="20" fill="#9c3d1f" opacity="0.5"/>
+        <line x1="60" y1="20" x2="60" y2="180" stroke="#9c3d1f" stroke-width="1.5" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <p class="nf-tag">Страница не найдена</p>
+    <p class="nf-title">Кажется, мы заплыли не туда</p>
+    <p class="nf-text">
+      Такой страницы нет — возможно, маршрут изменился, ссылка устарела
+      или вы ошиблись в адресе. Но течение всегда выносит к берегу:
+      вернитесь на главную или загляните в раздел с турами.
+    </p>
+
+    <div class="nf-actions">
+      <a href="index.html" class="nf-btn nf-btn-primary">На главную</a>
+      <a href="index.html#tours" class="nf-btn nf-btn-secondary">Смотреть сплавы</a>
+    </div>
+
+    <div class="nf-links">
+      <a href="index.html#reviews">Отзывы</a>
+      <a href="faq.html">Вопросы</a>
+      <a href="chat.html">Спросить у бота</a>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/nav-mobile.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+<style>
+footer { background: #1a1a18; padding: 4rem 4rem 2rem; }
+.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+.footer-brand .logo { font-size: 1.3rem; }
+.footer-brand p { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.45); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+.footer-col h5 { font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(168,216,232,0.5); margin-bottom: 1.2rem; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.7rem; }
+.footer-col ul a { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-col ul a:hover { color: #a8d8e8; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(253,250,245,0.25); }
+@media (max-width: 768px) { footer { padding: 3rem 1.5rem 1.5rem; } .footer-top { grid-template-columns: 1fr; gap: 2rem; } }
+@media (max-width: 480px) { .footer-top { padding: 2.5rem 1rem; } .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1rem; font-size: 0.75rem; } }
+</style>
+</body>
+</html>

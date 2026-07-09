@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src https://bwadwksnzcltbswktibs.supabase.co https://api.emailjs.com https://id.vk.com https://id.vk.ru;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Войти — Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #6b6560;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+    --border: #e0d8cc;
+    --input-bg: #faf7f2;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    padding-top: 5rem;
+  }
+
+  .main {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .card {
+    width: 100%; max-width: 420px;
+    background: var(--white); border-radius: 16px; padding: 2.5rem;
+    box-shadow: 0 2px 4px rgba(26,74,92,0.04), 0 12px 40px rgba(26,74,92,0.08);
+  }
+
+  .card-brand { text-align: center; margin-bottom: 2rem; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+  .card-sub { font-size: 0.84rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+  .auth-tabs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    background: var(--cream); border-radius: 8px; padding: 3px; margin-bottom: 1.8rem;
+  }
+  .auth-tab {
+    padding: 0.55rem 1rem; cursor: pointer; font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
+    background: none; border: none; border-radius: 6px; transition: all 0.2s; text-align: center;
+  }
+  .auth-tab.active { color: var(--river); background: var(--white); box-shadow: 0 1px 3px rgba(26,74,92,0.1); font-weight: 600; }
+
+  /* Плавный переход между панелями "Войти" / "Регистрация".
+     Обе панели лежат друг на друге (position: absolute) внутри
+     контейнера с auto-высотой, и кросс-фейдятся со сдвигом. */
+  .form-panels {
+    position: relative;
+    overflow: hidden;
+  }
+  .form-panel {
+    display: block;
+    opacity: 0;
+    transform: translateX(12px);
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+  }
+  .form-panel.active {
+    position: relative;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .form-panel.leaving {
+    position: absolute;
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  #vk-login-container {
+    margin-bottom: 1.2rem;
+  }
+  #vk-login-container > div {
+    width: 100% !important;
+  }
+  #vk-login-container button,
+  #vk-login-container [role="button"],
+  #vk-login-container a {
+    width: 100% !important;
+    padding: 0.85rem !important;
+    background: var(--white) !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 8px !important;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    color: var(--text) !important;
+    transition: border-color 0.2s, background 0.2s !important;
+    justify-content: center !important;
+    gap: 0.65rem !important;
+  }
+  #vk-login-container button:hover,
+  #vk-login-container [role="button"]:hover,
+  #vk-login-container a:hover {
+    border-color: var(--sand-dark) !important;
+    background: var(--input-bg) !important;
+  }
+  #vk-login-container img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .or-divider {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin: 1.2rem 0; font-size: 0.75rem; color: var(--sand-dark);
+  }
+  .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .field { margin-bottom: 0.85rem; }
+  .field label {
+    display: block; margin-bottom: 0.35rem;
+    font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--stone);
+  }
+  .field input {
+    width: 100%; padding: 0.75rem 0.9rem;
+    border: 1.5px solid var(--border); background: var(--input-bg);
+    font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text);
+    outline: none; border-radius: 8px; transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+  .field input:focus { border-color: var(--river); background: var(--white); }
+  .field input:-webkit-autofill,
+  .field input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--white) inset;
+    -webkit-text-fill-color: var(--text);
+    transition: background-color 600000s ease-in-out 0s;
+  }
+  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+
+  .btn-submit {
+    width: 100%; padding: 0.85rem; background: var(--river); color: var(--white);
+    border: none; cursor: pointer; font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 600; border-radius: 8px;
+    transition: background 0.2s, transform 0.1s; margin-top: 0.3rem;
+  }
+  .btn-submit:hover { background: var(--river-light); }
+  .btn-submit:active { transform: scale(0.99); }
+  .btn-submit:disabled { background: var(--sand-dark); cursor: default; transform: none; }
+
+  .consent-row {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    margin-bottom: 0.7rem; font-size: 0.78rem; line-height: 1.45; color: var(--text-muted);
+  }
+  .consent-row input[type="checkbox"] {
+    flex-shrink: 0; width: 17px; height: 17px; margin-top: 0.1rem;
+    accent-color: var(--river); cursor: pointer;
+  }
+  .consent-row label { cursor: pointer; }
+  .consent-row a { color: var(--river); text-decoration: underline; }
+  .consent-row a:hover { color: var(--river-light); }
+
+  .msg-box { padding: 0.65rem 0.9rem; margin: 0.6rem 0; font-size: 0.82rem; border-radius: 6px; display: none; }
+  .msg-box.error { background: rgba(192,57,43,0.07); color: #a93226; border: 1px solid rgba(192,57,43,0.2); display: block; }
+  .msg-box.success { background: rgba(44,122,58,0.07); color: #1e6b2f; border: 1px solid rgba(44,122,58,0.2); display: block; }
+
+  .switch-link { text-align: center; margin-top: 1.2rem; font-size: 0.82rem; color: var(--text-muted); }
+  .switch-link button { background: none; border: none; cursor: pointer; color: var(--river); font-weight: 600; font-size: 0.82rem; text-decoration: underline; padding: 0; }
+
+  /* OTP SCREEN */
+  #otp-screen { display: none; }
+  .otp-hint { font-size: 0.84rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.4rem; }
+  .otp-hint strong { color: var(--river); }
+
+  .otp-inputs {
+    display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem;
+  }
+  .otp-inputs input {
+    width: 48px; height: 56px; text-align: center;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    background: var(--input-bg); font-family: 'Inter', sans-serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--text);
+    outline: none; transition: border-color 0.2s;
+    -webkit-appearance: none; caret-color: var(--river);
+  }
+  .otp-inputs input:focus { border-color: var(--river); background: var(--white); }
+  .otp-inputs input.filled { border-color: var(--river-pale); }
+
+  .otp-resend {
+    text-align: center; margin-top: 0.8rem;
+    font-size: 0.8rem; color: var(--stone);
+  }
+  .otp-resend button {
+    background: none; border: none; cursor: pointer;
+    color: var(--river); font-size: 0.8rem; font-weight: 600;
+    text-decoration: underline; padding: 0;
+  }
+  .otp-resend button:disabled { color: var(--sand-dark); cursor: default; text-decoration: none; }
+
+  .otp-back {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.8rem; font-size: 0.78rem; color: var(--stone);
+    background: none; border: none; cursor: pointer; padding: 0;
+    transition: color 0.2s;
+  }
+  .otp-back:hover { color: var(--river); }
+
+  /* LOGGED IN */
+  #logged-panel { display: none; }
+  .user-badge {
+    display: flex; align-items: center; gap: 0.9rem;
+    background: var(--cream); padding: 1rem 1.2rem;
+    border-radius: 10px; margin-bottom: 1.6rem; border: 1px solid var(--border);
+  }
+  .user-avatar {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--river);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700;
+    color: var(--river-pale); flex-shrink: 0;
+  }
+  .user-badge-name { font-weight: 600; font-size: 0.9rem; color: var(--text); }
+  .user-badge-email { font-size: 0.75rem; color: var(--stone); margin-top: 0.1rem; }
+  .logout-link {
+    margin-left: auto; font-size: 0.75rem; font-weight: 500; color: var(--stone);
+    cursor: pointer; background: none; border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.3rem 0.7rem; transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+  }
+  .logout-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  .review-heading { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+  .review-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.4rem; }
+
+  .form-row { margin-bottom: 0.9rem; }
+  .form-row label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone); margin-bottom: 0.4rem; }
+  .form-row select, .form-row textarea {
+    width: 100%; padding: 0.75rem 0.9rem; border: 1.5px solid var(--border);
+    background: var(--input-bg); font-family: 'Inter', sans-serif;
+    font-size: 0.88rem; color: var(--text); outline: none; border-radius: 8px;
+    transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  .form-row select:focus, .form-row textarea:focus { border-color: var(--river); background: var(--white); }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+
+  .star-row { display: flex; gap: 2px; margin: 0.3rem 0 0.5rem; }
+  .star-btn { font-size: 1.6rem; cursor: pointer; background: none; border: none; padding: 0 2px; color: var(--border); transition: color 0.15s; line-height: 1; }
+  .star-btn.active { color: #c4a840; }
+
+  .back-to-site { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-size: 0.78rem; font-weight: 500; color: var(--stone); text-decoration: none; transition: color 0.2s; }
+  .back-to-site:hover { color: var(--river); }
+
+  @media (max-width: 480px) {
+    .main { padding: 1.5rem 1rem 3rem; align-items: flex-start; padding-top: 1.5rem; }
+    .card { padding: 1.6rem 1.2rem; border-radius: 12px; }
+    .card-title { font-size: 1.3rem; }
+    .fields-row { grid-template-columns: 1fr; gap: 0; }
+    .otp-inputs { gap: 0.35rem; }
+    .otp-inputs input { width: 42px; height: 50px; font-size: 1.2rem; }
+    .btn-submit { padding: 0.8rem; font-size: 0.82rem; }
+  }
+
+  @media (max-width: 360px) {
+    .card { padding: 1.4rem 1rem; }
+    .otp-inputs input { width: 36px; height: 44px; font-size: 1.1rem; border-radius: 7px; }
+    .auth-tabs { margin-bottom: 1.4rem; }
+  }
+
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<div class="main">
+  <div class="card">
+
+    <div class="card-brand">
+      <p class="card-title" id="card-title">Войти</p>
+    </div>
+
+    <!-- AUTH BLOCK -->
+    <div id="auth-block">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-action="switch-tab" data-tab="login">Войти</button>
+        <button class="auth-tab" data-action="switch-tab" data-tab="register">Регистрация</button>
+      </div>
+
+      <div id="vk-login-container"></div>
+      <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+      <script src="js/vk-init.js"></script>
+
+      <div class="or-divider">или</div>
+
+      <!-- LOGIN / REGISTER (плавный переход между ними) -->
+      <div class="form-panels">
+      <div class="form-panel active" id="panel-login">
+        <div class="field">
+          <label for="login-email">Email или логин</label>
+          <input type="text" id="login-email" placeholder="you@example.com или ivan_petrov" autocomplete="username" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="login-pass">Пароль</label>
+          <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div class="msg-box" id="login-msg"></div>
+        <button class="btn-submit" data-action="do-login">Войти</button>
+        <p class="switch-link">Нет аккаунта? <button data-action="switch-tab" data-tab="register">Зарегистрироваться</button></p>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="form-panel" id="panel-register">
+        <div class="fields-row">
+          <div class="field">
+            <label for="reg-name">Имя</label>
+            <input type="text" id="reg-name" placeholder="Иван" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="reg-surname">Фамилия</label>
+            <input type="text" id="reg-surname" placeholder="Петров" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="field">
+          <label for="reg-login">Логин</label>
+          <input type="text" id="reg-login" placeholder="ivan_petrov" autocomplete="username" spellcheck="false">
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="reg-pass">Пароль</label>
+          <input type="password" id="reg-pass" placeholder="Минимум 6 символов" autocomplete="new-password">
+        </div>
+        <div class="msg-box" id="reg-msg"></div>
+
+        <div class="consent-row">
+          <input type="checkbox" id="reg-consent-pd">
+          <label for="reg-consent-pd">
+            Согласен с <a href="personal-data-policy.html" target="_blank" rel="noopener">Политикой обработки персональных данных</a>
+          </label>
+        </div>
+        <div class="consent-row">
+          <input type="checkbox" id="reg-consent-marketing">
+          <label for="reg-consent-marketing">
+            Согласен на получение <a href="marketing-consent.html" target="_blank" rel="noopener">рекламной рассылки</a> (необязательно)
+          </label>
+        </div>
+
+        <button class="btn-submit" data-action="do-register" id="reg-submit-btn" disabled>Получить код</button>
+        <p class="switch-link">Уже есть аккаунт? <button data-action="switch-tab" data-tab="login">Войти</button></p>
+      </div>
+      </div>
+    </div>
+
+    <!-- OTP SCREEN -->
+    <div id="otp-screen">
+      <p class="otp-hint">Мы отправили 6-значный код на<br><strong id="otp-email-label"></strong></p>
+      <div class="otp-inputs" id="otp-inputs">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="0">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="1">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="2">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="3">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="4">
+        <input type="text" inputmode="numeric" maxlength="1" data-i="5">
+      </div>
+      <div class="msg-box" id="otp-msg"></div>
+      <button class="btn-submit" id="otp-verify-btn" data-action="verify-otp">Подтвердить</button>
+      <div class="otp-resend">
+        Не пришло? <button id="resend-btn" data-action="resend-code" disabled>Отправить повторно (<span id="resend-timer">60</span>с)</button>
+      </div>
+      <button class="otp-back" data-action="back-to-register">← Изменить данные</button>
+    </div>
+    
+    <div id="logged-panel"></div>
+
+  </div>
+</div>
+
+<!-- Мобильное меню -->
+<script src="js/nav-mobile.js"></script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/auth.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://bwadwksnzcltbswktibs.supabase.co; connect-src https://bwadwksnzcltbswktibs.supabase.co https://cdn.jsdelivr.net https://api.emailjs.com;">
+<title>Сплав</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" class="site-icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Unbounded:wght@300;400;700&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --forest: #2c4a2e;
+    --forest-light: #4a7c4e;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #5a5248;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    height: 100vh; min-height: 700px;
+    position: relative;
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+    padding: 0 4rem 5rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(160deg, rgba(26,74,92,0.7) 0%, rgba(26,74,92,0.3) 50%, transparent 80%),
+      url('img/bg1.jpg') center/cover no-repeat;
+  }
+  .hero-texture {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 60px,
+      rgba(26,74,92,0.04) 60px,
+      rgba(26,74,92,0.04) 61px
+    );
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 750px; }
+  .hero-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--river-pale);
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8)
+  }
+  .hero-label::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--river-pale);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 0.2em;
+    text-shadow: 0 1px 40px rgba(0,0,0,0.8)
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--river-pale);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.8);
+    margin: 1.8rem 0 2.5rem;
+    max-width: 480px;
+    line-height: 1.7;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.8)
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #a8441f; transform: translateY(-1px); }
+  .btn-outline {
+    display: inline-block;
+    border: 1.5px solid rgba(253,250,245,0.6);
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { background: rgba(253,250,245,0.1); border-color: rgba(253,250,245,0.9); }
+
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; right: 4rem; z-index: 2;
+    writing-mode: vertical-rl;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(253,250,245,0.5);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block; width: 1px; height: 60px;
+    background: rgba(253,250,245,0.3);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%,100% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--river);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 0 2rem;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+  }
+  .stat-item:first-child { border-left: none; padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--river-pale);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(168,216,232,0.6);
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 7rem 4rem; }
+  .section-tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--river-light);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-tag::before {
+    content: '';
+    display: inline-block; width: 20px; height: 1.5px;
+    background: var(--river-light);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  /* RIVERS SECTION */
+  .rivers-section { background: var(--cream); }
+  .rivers-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    margin-bottom: 5rem;
+  }
+  .rivers-text p {
+    margin-top: 1.8rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+  .rivers-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .river-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+  }
+  .river-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+  .river-card:hover img { transform: scale(1.06); }
+  .river-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(26,74,92,0.9) 0%, transparent 60%);
+    padding: 2rem;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .river-card-tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--river-pale);
+    margin-bottom: 0.5rem;
+  }
+  .river-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .river-card p {
+    font-size: 0.82rem;
+    color: rgba(253,250,245,0.75);
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+  .river-card .difficulty {
+    margin-top: 1rem;
+    display: flex; gap: 4px;
+  }
+  .diff-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(168,216,232,0.3);
+  }
+  .diff-dot.active { background: var(--river-pale); }
+
+  /* TOURS SECTION */
+  .tours-section { background: var(--white); }
+  .tours-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3.5rem;
+  }
+  .tours-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--sand);
+  }
+  .tour-card {
+    background: var(--white);
+    padding: 2.5rem;
+    display: flex; flex-direction: column;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  .tour-card:hover { background: var(--cream); }
+  .tour-card-head {
+    display: flex; justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .tour-badge {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    border-radius: 1px;
+  }
+  .badge-medveditsa { background: rgba(26,74,92,0.1); color: var(--river); }
+  .badge-khoper { background: rgba(44,74,46,0.1); color: var(--forest); }
+  .badge-combo { background: rgba(196,81,42,0.1); color: var(--accent); }
+  .tour-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--river);
+  }
+  .tour-price span {
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--stone);
+  }
+  .tour-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .tour-card p {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .tour-meta {
+    margin-top: 1.8rem;
+    display: flex; gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sand);
+  }
+  .tour-meta-item {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--stone);
+  }
+  .tour-meta-icon { font-size: 1rem; }
+  .tour-cta {
+    margin-top: 1.5rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--river);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .tour-cta:hover { gap: 0.9rem; }
+  .featured-tour {
+    grid-column: span 3;
+    background: var(--river);
+    color: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .featured-tour .tour-info { padding: 3rem; }
+  .featured-tour .tour-image {
+    overflow: hidden;
+    aspect-ratio: auto;
+    max-height: 850px;
+  }
+  .featured-tour .tour-image img {
+    object-position: 60%;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .featured-tour .tour-badge { background: rgba(255,255,255,0.15); color: var(--river-pale); }
+  .featured-tour .tour-price { color: var(--river-pale); }
+  .featured-tour h3 { color: var(--white); font-size: 1.8rem; }
+  .featured-tour p { color: rgba(253,250,245,0.75); font-size: 0.9rem; }
+  .featured-tour .tour-meta { border-top-color: rgba(255,255,255,0.15); }
+  .featured-tour .tour-meta-item { color: rgba(168,216,232,0.8); }
+  .featured-tour .tour-cta {
+    align-self: end;
+    color: var(--river-pale);
+  }
+
+  /* EXPERIENCE SECTION */
+  .experience-section { background: var(--forest); padding: 7rem 0; }
+  .experience-inner { padding: 0 4rem; }
+  .exp-header { margin-bottom: 4rem; }
+  .exp-header .section-tag { color: rgba(168,216,232,0.7); }
+  .exp-header .section-tag::before { background: rgba(168,216,232,0.5); }
+  .exp-header h2 { color: var(--white); }
+  .experience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .exp-item {
+    padding: 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .exp-item:last-child { border-right: none; }
+  .exp-item:hover { background: rgba(255,255,255,0.04); }
+  .exp-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(168,216,232,0.15);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .exp-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .exp-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+  .exp-item p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.55);
+    line-height: 1.8;
+  }
+
+  /* GALLERY STRIP — desktop */
+  .gallery-strip {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 320px;
+    gap: 2px;
+  }
+  .gallery-strip figure {
+    overflow: hidden;
+    margin: 0;
+    height: 100%;
+  }
+  .gallery-strip figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s, filter 0.5s;
+    filter: saturate(0.8);
+  }
+  .gallery-strip figure:hover img {
+    transform: scale(1.08);
+    filter: saturate(1.1);
+  }
+
+  /* GALLERY MOBILE BUTTON */
+  .gallery-mobile-btn {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: var(--cream);
+    padding: 2rem 1.5rem;
+    gap: 1.2rem;
+  }
+  .gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .gallery-preview img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    filter: saturate(0.85);
+  }
+  .gallery-open-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--river);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 2rem;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gallery-open-btn:hover { background: var(--river-light); }
+
+  /* LIGHTBOX */
+  .gallery-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(10, 20, 30, 0.96);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gallery-lightbox.open { display: block; }
+  .lightbox-close {
+    position: sticky;
+    top: 1rem;
+    float: right;
+    margin: 1rem 1rem 0 0;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: none;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+  .lightbox-inner {
+    clear: both;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0.5rem;
+    padding-top: 0;
+  }
+  .lightbox-inner figure {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+  .lightbox-inner figure img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 80vh;
+  }
+
+  /* Переключение галерея: десктоп vs мобайл */
+  @media (max-width: 1023px) {
+    .gallery-strip { display: none !important; }
+    .gallery-mobile-btn { display: flex; }
+  }
+  @media (min-width: 1024px) {
+    .gallery-mobile-btn { display: none !important; }
+  }
+
+  /* CALENDAR SECTION */
+  .calendar-section { background: var(--cream); }
+  .calendar-header { margin-bottom: 3rem; }
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--sand-dark);
+    border: 1px solid var(--sand-dark);
+  }
+  .season-item {
+    background: var(--white);
+    padding: 2rem;
+    position: relative;
+  }
+  .season-item.active { background: var(--river); }
+  .season-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.8rem;
+  }
+  .season-item.active .season-name { color: rgba(168,216,232,0.7); }
+  .season-months {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .season-item.active .season-months { color: var(--white); }
+  .season-desc {
+    font-size: 0.83rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .season-item.active .season-desc { color: rgba(253,250,245,0.75); }
+  .season-status {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 1px;
+  }
+  .status-open { background: rgba(74,124,78,0.12); color: var(--forest-light); }
+  .status-best { background: var(--river-pale); color: var(--river); }
+  .status-closed { background: rgba(138,125,110,0.15); color: var(--stone); }
+
+  /* BOOKING */
+  .booking-section {
+    background: var(--text);
+    padding: 6rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .booking-text .section-tag { color: rgba(168,216,232,0.7); }
+  .booking-text .section-tag::before { background: rgba(168,216,232,0.5); }
+  .booking-text h2 { color: var(--white); margin-bottom: 1.5rem; }
+  .booking-text p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.6);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .booking-contacts { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.9rem;
+    color: rgba(253,250,245,0.8);
+  }
+  .contact-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .booking-form { background: var(--white); padding: 2.5rem; border-radius: 16px; }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+  .form-row { margin-bottom: 1.2rem; }
+  .form-row label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.5rem;
+  }
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--sand-dark);
+    background: var(--cream);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    border-radius: 10px;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus {
+    border-color: var(--river);
+    background: var(--white);
+  }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+  .form-error {
+    color: var(--accent);
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    display: none;
+  }
+  .form-row.has-error input,
+  .form-row.has-error select,
+  .form-row.has-error textarea {
+    border-color: var(--accent);
+  }
+  .form-row.has-error .form-error { display: block; }
+  .form-submit {
+    width: 100%;
+    padding: 1rem;
+    background: var(--river);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    border-radius: 999px;
+  }
+  .form-submit:hover { background: var(--river-light); }
+  .form-submit:disabled { background: var(--forest); cursor: default; }
+
+  /* REVIEWS */
+  .reviews-section { background: var(--white); }
+  .reviews-header { margin-bottom: 3.5rem; }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .review-card {
+    background: var(--cream);
+    padding: 2rem;
+    position: relative;
+  }
+  .review-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    line-height: 0.7;
+    color: var(--river-pale);
+    margin-bottom: 0.5rem;
+  }
+  .review-text {
+    font-size: 0.93rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .review-author {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--sand-dark);
+  }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--river);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--river-pale);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .author-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .author-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .author-date {
+    font-size: 0.78rem;
+    color: var(--stone);
+    margin-top: 0.15rem;
+  }
+  .stars { color: #c4a840; font-size: 0.85rem; margin-top: 0.2rem; }
+
+  /* ALL REVIEWS BTN */
+  .btn-all-reviews {
+    display: inline-flex; align-items: center;
+    border: 1.5px solid var(--river);
+    color: var(--river);
+    padding: 0.9rem 2.4rem;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-all-reviews:hover { background: var(--river); color: var(--white); }
+
+  /* FOOTER */
+  footer {
+    background: var(--text);
+    padding: 4rem 4rem 2rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+  }
+  .footer-brand .logo { font-size: 1.3rem; }
+  .footer-brand p {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.45);
+    line-height: 1.8;
+    margin-top: 1rem;
+    max-width: 280px;
+  }
+  .footer-col h5 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(168,216,232,0.5);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul a {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(253,250,245,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--river-pale); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem;
+    color: rgba(253,250,245,0.25);
+  }
+
+  .invisible-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: default;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 3rem; }
+    .hero h1 { font-size: 3rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+    .rivers-intro, .rivers-cards { grid-template-columns: 1fr; }
+    .tours-grid { grid-template-columns: 1fr; }
+    .featured-tour { grid-column: span 1; grid-template-columns: 1fr; }
+    .experience-grid { grid-template-columns: repeat(2, 1fr); }
+    .season-grid { grid-template-columns: repeat(2, 1fr); }
+    .booking-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 480px) {
+    nav { padding: 0.9rem 1rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-sub { font-size: 0.9rem; }
+    .hero-actions { flex-direction: column; gap: 0.7rem; }
+    .hero-actions a { width: 100%; text-align: center; }
+    .stats-bar { grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem 1rem; }
+    .stat-value { font-size: 1.8rem; }
+    section { padding: 3rem 1rem; }
+    .experience-grid { grid-template-columns: 1fr; }
+    .season-grid { grid-template-columns: 1fr; }
+    .booking-section { padding: 3rem 1rem; }
+    .footer-top { padding: 2.5rem 1rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1rem; font-size: 0.75rem; }
+    .review-card { padding: 1.5rem; }
+  }
+
+  @media (max-width: 360px) {
+    .hero h1 { font-size: 1.9rem; }
+    .stats-bar { grid-template-columns: 1fr; }
+    nav { padding: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="#home" data-nav="home">Главная</a></li>
+    <li><a href="#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="#home" data-nav="home">Главная</a></li>
+      <li><a href="#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="hero-content">
+    <p class="hero-label">Туристические сплавы</p>
+    <h1>Живая<br>вода <em>двух</em><br>рек</h1>
+    <p class="hero-sub">Сплавы по Медведице и Хопру каждое лето — июнь, июль, август. Дикая природа Поволжья, тёплая вода и незабываемые вечера у костра.</p>
+    <div class="hero-actions">
+      <a href="#tours" class="btn-primary">Выбрать сплав</a>
+      <a href="#rivers" class="btn-outline">О маршрутах</a>
+    </div>
+  </div>
+</section>
+
+<!-- RIVERS -->
+<section class="rivers-section" id="rivers">
+  <div class="rivers-intro">
+    <div class="rivers-text">
+      <p class="section-tag">Наши реки</p>
+      <h2>Медведица<br>и Хопёр</h2>
+      <p>Две реки — два совершенно разных характера. Медведица — быстрая и своенравная, с перекатами и крутыми берегами. Хопёр — медленный и величественный, с заливными лугами и первозданными лесами.</p>
+      <p>Вместе они образуют уникальный сплавной регион Поволжья, где можно проводить сплавы для любого уровня подготовки — от первого сплава в жизни до многодневных экспедиций.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP — desktop (1024px+) -->
+<div class="gallery-strip" id="gallery-desktop">
+  <figure><img src="img/splav2.jpg" alt="Счастливые клиенты"></figure>
+  <figure><img src="img/splav3.jpg" alt="Счастливые клиенты"></figure>
+  <figure><img src="img/splav1.jpg" alt="Сплав"></figure>
+  <figure><img src="img/splav5.jpg" alt="Река"></figure>
+  <figure><img src="img/splav4.jpg" alt="Природа"></figure>
+</div>
+
+<!-- GALLERY MOBILE BUTTON (до 1023px) -->
+<div class="gallery-mobile-btn" id="gallery-mobile">
+  <div class="gallery-preview">
+    <img src="img/splav1.jpg" alt="Сплав">
+    <img src="img/splav2.jpg" alt="Счастливые клиенты">
+    <img src="img/splav3.jpg" alt="Река">
+  </div>
+  <button class="gallery-open-btn" id="gallery-open-btn">Открыть галерею · 5 фото</button>
+</div>
+
+<!-- ЛАЙТБОКС -->
+<div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Галерея фотографий">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть галерею">✕</button>
+  <div class="lightbox-inner">
+    <figure><img src="img/splav2.jpg" alt="Счастливые клиенты"></figure>
+    <figure><img src="img/splav3.jpg" alt="Счастливые клиенты"></figure>
+    <figure><img src="img/splav1.jpg" alt="Сплав"></figure>
+    <figure><img src="img/splav5.jpg" alt="Река"></figure>
+    <figure><img src="img/splav4.jpg" alt="Природа"></figure>
+  </div>
+</div>
+
+<!-- TOURS -->
+<section class="tours-section" id="tours">
+  <div class="tours-header">
+    <div>
+      <p class="section-tag">Программы сплавов</p>
+      <h2>Выберите<br>свой сплав</h2>
+    </div>
+    <a href="#booking" class="btn-primary" style="white-space:nowrap;">Записаться<br>
+      на сплав</a>
+  </div>
+  <div class="tours-grid">
+
+    <!-- FEATURED -->
+    <div class="featured-tour">
+      <div class="tour-info">
+        <h3>Две реки — одно лето</h3>
+        <p>Полное погружение в дикую природу Поволжья:<br>
+        два совершенно разных характера рек, два типа пейзажей, одно незабываемое путешествие.</p>
+        <div class="tour-meta">
+          <div class="tour-meta-item">2-4 дней</div>
+          <div class="tour-meta-item">Байдарка / каяк</div>
+          <div class="tour-meta-item">Для всех</div>
+        </div>
+      </div>
+      <div class="tour-image">
+        <img src="img/splavtour.jpg" alt="Комбо-тур">
+      </div>
+    </div>
+
+    <div class="tour-card">
+      <div class="tour-card-head">
+        <span class="tour-badge badge-medveditsa">Медведица</span>
+      </div>
+      <h3>Выходной на Медведице</h3>
+      <p>Идеальный вариант для тех, кто хочет попробовать сплав впервые. Два дня активного движения по реке, вечер у костра и возвращение домой.</p>
+      <div class="tour-meta">
+        <div class="tour-meta-item">2 дня</div>
+        <div class="tour-meta-item">Байдарка / каяк</div>
+      </div>
+      <a href="#booking" class="tour-cta">Узнать цену &#8594;</a>
+    </div>
+
+    <div class="tour-card">
+      <div class="tour-card-head">
+        <span class="tour-badge badge-khoper">Хопёр</span>
+      </div>
+      <h3>Хопёр тихий</h3>
+      <p>Три дня по одной из чистейших рек Европы. Тихие плёсы, бобровые запруды, ночёвки на заливных лугах. Для семей с детьми.</p>
+      <div class="tour-meta">
+        <div class="tour-meta-item">Байдарка / каяк</div>
+      </div>
+      <a href="#booking" class="tour-cta">Узнать цену &#8594;</a>
+    </div>
+
+    <div class="tour-card">
+      <div class="tour-card-head">
+        <span class="tour-badge badge-medveditsa">Медведица</span>
+      </div>
+      <h3>Медведица — полный маршрут</h3>
+      <p>Для любителей более динамичного сплава.</p>
+      <div class="tour-meta">
+        <div class="tour-meta-item">3 дня</div>
+        <div class="tour-meta-item">Байдарка / каяк</div>
+      </div>
+      <a href="#booking" class="tour-cta">Узнать цену &#8594;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience-section" id="about">
+  <div class="experience-inner">
+    <div class="exp-header">
+      <p class="section-tag">Почему мы</p>
+      <h2>Каждый сплав —<br>это больше, чем лодка</h2>
+    </div>
+    <div class="experience-grid">
+      <div class="exp-item">
+        <div class="exp-num">01</div>
+        <h4>Полное снаряжение</h4>
+        <p>Байдарки, каяки, палатки, спальники — всё включено. Вам нужно только приехать.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-num">02</div>
+        <h4>Опытные гиды</h4>
+        <p>Все инструкторы знают каждый перекат и каждую стоянку на маршруте.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-num">03</div>
+        <h4>Питание на природе</h4>
+        <p>3-х разовое питание и, конечно, традиционные посиделки у костра.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-num">04</div>
+        <h4>Живая природа</h4>
+        <p>Цапли, орланы, бобры, косули — поволжские реки богаты дикими обитателями. Берите фотоаппарат.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDAR -->
+<section class="calendar-section" id="calendar">
+  <div class="calendar-header">
+    <p class="section-tag">Когда плыть</p>
+    <h2>Сезон сплавов</h2>
+    <p style="margin-top:1rem; font-size:1rem; font-weight:300; color:var(--text-muted); max-width:560px; line-height:1.8;">
+      Мы проводим сплавы только в летний сезон — с июня по август. Это лучшее время: тёплая вода, длинные вечера и идеальная погода для жизни на реке.
+    </p>
+  </div>
+  <div class="season-item active">
+    <p class="season-name">Лето</p>
+    <p class="season-months">Июнь — Август</p>
+    <p class="season-desc">Наш сезон! Тёплая вода и воздух, длинные вечера, купание на стоянках — самое время приехать.</p>
+    <span class="season-status status-best">Сезон открыт</span>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<div class="booking-section" id="booking">
+  <div class="booking-text">
+    <p class="section-tag">Бронирование</p>
+    <h2>Готовы<br>к воде?</h2>
+    <p>Заполните форму — свяжемся с вами в течение нескольких часов, ответим на все вопросы и подберём оптимальный сплав.</p>
+    <div class="booking-contacts">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <a href="tel:+79034567890" style="color:inherit; text-decoration:none;">+7 (903) 456-78-90</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <a href="mailto:info@dikayavoda.ru" style="color:inherit; text-decoration:none;">info@dikayavoda.ru</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <span>Telegram: <a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank" class="invisible-link">@cplavsmariei</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="booking-form">
+    <p class="form-title">Оставить заявку</p>
+    <div class="form-grid">
+      <div class="form-row" id="row-name">
+        <label for="field-name">Ваше имя</label>
+        <input type="text" id="field-name" name="name" placeholder="Иван Иванов" autocomplete="name">
+        <span class="form-error">Введите имя</span>
+      </div>
+      <div class="form-row" id="row-phone">
+        <label for="field-phone">Телефон</label>
+        <input type="tel" id="field-phone" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+        <span class="form-error">Введите корректный телефон</span>
+      </div>
+    </div>
+    <div class="form-row" id="row-tour">
+      <label for="field-tour">Сплав</label>
+      <select id="field-tour" name="tour">
+        <option value="">— Выберите сплав —</option>
+      </select>
+      <span class="form-error">Выберите сплав</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-row" id="row-date">
+        <label for="field-date">Желаемая<br>
+          дата</label>
+        <input type="date" id="field-date" name="date" autocomplete="off">
+        <span class="form-error">Выберите дату не раньше сегодня</span>
+      </div>
+      <div class="form-row" id="row-people">
+        <label for="field-people">Количество<br>
+          человек</label>
+        <input type="number" id="field-people" name="people" min="1" max="50" placeholder="2">
+        <span class="form-error">От 1 до 50 человек</span>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="field-comment">Комментарий</label>
+      <textarea id="field-comment" name="comment" placeholder="Есть дети, есть опыт сплавов, особые пожелания..."></textarea>
+    </div>
+    <button class="form-submit" id="form-submit">Отправить заявку</button>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1.5rem; margin-bottom:3.5rem;">
+    <div>
+      <p class="section-tag">Отзывы</p>
+      <h2>Что говорят<br>наши сплавщики</h2>
+    </div>
+    <a href="review.html" class="btn-primary" style="white-space:nowrap;">Оставить отзыв</a>
+  </div>
+
+  <!-- Отзывы пользователей из хранилища -->
+  <div id="user-reviews-wrap" style="display:none; margin-top:2.5rem;">
+    <p style="font-family:'Unbounded',sans-serif;font-size:0.6rem;font-weight:400;letter-spacing:0.25em;text-transform:uppercase;color:var(--river-light);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.8rem;">
+      <span style="display:inline-block;width:20px;height:1.5px;background:var(--river-light);"></span>Отзывы участников
+    </p>
+    <div class="reviews-grid" id="user-reviews-grid"></div>
+  </div>
+
+  <!-- Кнопка на страницу всех отзывов -->
+  <div style="margin-top:3.5rem; text-align:center;">
+    <a href="reviews.html" class="btn-all-reviews">
+      Все отзывы
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:inline-block;vertical-align:middle;margin-left:0.5rem;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<script src="js/nav-mobile.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/index.js"></script>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <img src="img/logo.png" alt="СПЛАВ" style="width:48px;height:48px;">
+        <span class="logo-text">Сплав</span>
+      </a>
+      <p>Туристические сплавы по рекам Медведице и Хопру. Саратовская область.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Сплавы</h5>
+      <ul>
+        <li><a href="#tours">Медведица</a></li>
+        <li><a href="#tours">Хопёр</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Информация</h5>
+      <ul>
+        <li><a href="#rivers">О реках</a></li>
+        <li><a href="#calendar">Сезоны</a></li>
+        <li><a href="#about">Снаряжение</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Контакты</h5>
+      <ul>
+        <li><a href="tel:+79173231519">+7 (917) 323-15-19</a></li>
+        <li><a href="mailto:info@dikayavoda.ru">info@saratovsplav.ru</a></li>
+        <li><a href="https://vk.com/pro_splav" rel="noopener noreferrer" target="_blank">ВКонтакте</a></li>
+        <li><a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank">Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Сплав. Все права защищены.</span>
+    <span><a href="privacy.html" style="color:inherit;opacity:0.7;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+<!-- FLOATING CHAT WIDGET -->
+<style>
+  .chat-fab{position:fixed;bottom:2.5rem;right:1.5rem;z-index:200;width:56px;height:56px;background:var(--river);color:var(--white);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(26,74,92,0.35);transition:transform .2s,background .2s}
+  .chat-fab:hover{background:var(--river-light);transform:scale(1.08)}
+  .chat-fab svg{width:24px;height:24px}
+  .chat-fab .fab-close{display:none}
+  .chat-fab.open .fab-open{display:none}
+  .chat-fab.open .fab-close{display:block}
+  .chat-panel{position:fixed;bottom:6.5rem;right:1.5rem;z-index:199;width:380px;max-width:calc(100vw - 2rem);height:520px;max-height:calc(100vh - 8rem);background:var(--white);border-radius:12px;box-shadow:0 8px 40px rgba(26,74,92,0.2);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(16px) scale(.95);pointer-events:none;transition:opacity .25s,transform .25s,height .25s ease,max-height .25s ease}
+  .chat-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .cp-header{background:var(--river);color:var(--white);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.65rem;flex-shrink:0}
+  .cp-header img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+  .cp-header h4{font-size:.88rem;font-weight:600}
+  .cp-header p{font-size:.68rem;color:var(--river-pale);opacity:.8}
+  .cp-online{width:7px;height:7px;background:#4ade80;border-radius:50%;margin-left:auto}
+  .cp-messages{flex:1;overflow-y:auto;overflow-x:hidden;padding:1rem;display:flex;flex-direction:column;gap:.7rem}
+  .cp-msg{max-width:82%;min-width:0;padding:.6rem .85rem;border-radius:10px;font-size:.84rem;line-height:1.5;font-family:'Mulish',sans-serif;word-wrap:break-word;overflow-wrap:break-word;word-break:break-word;white-space:pre-wrap}
+  .cp-msg.bot{background:#f0f0f0;color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+  .cp-msg.user{background:var(--river);color:var(--white);align-self:flex-end;border-bottom-right-radius:3px}
+  .cp-typing{display:flex;gap:4px;padding:.6rem .85rem}
+  .cp-typing span{width:5px;height:5px;background:#aaa;border-radius:50%;animation:cpdot 1.2s infinite}
+  .cp-typing span:nth-child(2){animation-delay:.2s}
+  .cp-typing span:nth-child(3){animation-delay:.4s}
+  @keyframes cpdot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-3px)}}
+  .cp-quick{display:flex;gap:.35rem;padding:0 1rem .5rem;flex-wrap:wrap}
+  .cp-quick button{background:var(--white);border:1px solid var(--river-pale);color:var(--river);padding:.3rem .65rem;border-radius:14px;font-size:.72rem;font-family:'Mulish',sans-serif;cursor:pointer;transition:all .15s}
+  .cp-quick button:hover{background:var(--river);color:var(--white);border-color:var(--river)}
+  .cp-input{display:flex;gap:.4rem;padding:.7rem 1rem;border-top:1px solid #e8e0d4;background:var(--white);flex-shrink:0}
+  .cp-input input{flex:1;padding:.55rem .8rem;border:1.5px solid #e0d8cc;border-radius:20px;font-family:'Mulish',sans-serif;font-size:.84rem;outline:none}
+  .cp-input input:focus{border-color:var(--river)}
+  .cp-input button{width:36px;height:36px;background:var(--river);color:var(--white);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .cp-input button:hover{background:var(--river-light)}
+  .cp-input button:disabled{background:#ccc;cursor:default}
+  .cp-input button svg{width:16px;height:16px}
+  @media(max-width:480px){
+    .chat-panel{
+      right:0; left:0; bottom:0;
+      width:100%; max-width:100%;
+      height:min(70vh, 70dvh);
+      max-height:min(70vh, 70dvh);
+      border-radius:16px 16px 0 0;
+    }
+    .chat-fab{bottom:2rem;right:1rem}
+    .cp-input input{font-size:1rem} /* предотвращает авто-зум в iOS Safari при фокусе */
+  }
+  .chat-panel.keyboard-open{
+    height:auto !important;
+    max-height:none !important;
+  }
+  html.chat-scroll-lock, body.chat-scroll-lock {
+    overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+  .chat-panel, .cp-messages {
+    touch-action: pan-y;
+  }
+</style>
+
+<button class="chat-fab" id="chat-fab">
+  <svg class="fab-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <svg class="fab-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+</button>
+
+<div class="chat-panel" id="chat-panel">
+  <div class="cp-header">
+    <img src="img/logo.png" alt="">
+    <div><h4>Помощник «Сплав»</h4><p>О турах и записях</p></div>
+    <div class="cp-online"></div>
+  </div>
+  <div class="cp-messages" id="cp-messages">
+    <div class="cp-msg bot">Здравствуйте! Расскажу о сплавах, реках и помогу с записью. Задавайте вопросы!</div>
+  </div>
+  <div class="cp-quick" id="cp-quick">
+    <button data-msg="Какие туры есть?">Какие туры?</button>
+    <button data-msg="Какие реки?">Какие реки?</button>
+    <button data-msg="Когда сезон?">Когда сезон?</button>
+    <button data-msg="Как записаться?">Записаться</button>
+  </div>
+  <div class="cp-input">
+    <input type="text" id="cp-input" placeholder="Сообщение..." autocomplete="off">
+    <button id="cp-send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="js/chat.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+
+</body>
+</html>
