@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://bwadwksnzcltbswktibs.supabase.co;">
+<title>Сплав по Медведице — Сплав</title>
+<meta name="description" content="Сплав по реке Медведице в Саратовской области: быстрое течение, перекаты, крутые берега. Программы на 2 и 3 дня, байдарки и каяки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="img/ico.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Unbounded:wght@300;400;700&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/nav.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --river: #1a4a5c;
+    --river-light: #2d7a9a;
+    --river-pale: #a8d8e8;
+    --forest: #2c4a2e;
+    --forest-light: #4a7c4e;
+    --sand: #e8dcc8;
+    --sand-dark: #c4b49a;
+    --cream: #f5f0e8;
+    --stone: #8a7d6e;
+    --text: #1a1a18;
+    --text-muted: #5a5248;
+    --white: #fdfaf5;
+    --accent: #c4512a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+    padding-top: 5rem;
+  }
+
+  section { padding: 7rem 4rem; }
+
+  .section-tag {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--river-light);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-tag::before {
+    content: '';
+    display: inline-block; width: 20px; height: 1.5px;
+    background: var(--river-light);
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  /* ── HERO ── */
+  .river-hero {
+    padding: 10rem 4rem 5rem;
+    background:
+      linear-gradient(160deg, rgba(26,74,92,0.06) 0%, transparent 60%),
+      var(--white);
+    border-bottom: 1px solid rgba(26,74,92,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .river-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 60px,
+      rgba(26,74,92,0.025) 60px, rgba(26,74,92,0.025) 61px
+    );
+    pointer-events: none;
+  }
+  .river-hero-inner { position: relative; max-width: 760px; }
+  .river-hero-label {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.62rem; font-weight: 300;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--river-light);
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .river-hero-label::before {
+    content: ''; display: block;
+    width: 32px; height: 1px;
+    background: var(--river-pale);
+  }
+  .river-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1.08;
+    color: var(--river); margin-bottom: 1.2rem;
+  }
+  .river-hero h1 em { font-style: italic; color: var(--accent); }
+  .river-hero-sub {
+    font-size: 1rem; font-weight: 300; line-height: 1.8;
+    color: var(--text-muted); max-width: 560px; margin-bottom: 2.2rem;
+  }
+  .river-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--river); color: var(--white);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.95rem 2rem; border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--river-light); }
+  .btn-outline {
+    display: inline-block;
+    background: transparent; color: var(--river);
+    border: 1.5px solid var(--river);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.9rem 2rem; border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { background: var(--river); color: var(--white); }
+
+  /* ── QUICK FACTS ── */
+  .facts-strip {
+    max-width: 1100px; margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px; background: var(--sand);
+    border-bottom: 1px solid rgba(26,74,92,0.08);
+  }
+  .fact-item {
+    background: var(--white);
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+  }
+  .fact-item .fact-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--river); margin-bottom: 0.3rem;
+  }
+  .fact-item .fact-label {
+    font-size: 0.78rem; font-weight: 400;
+    color: var(--stone);
+  }
+
+  /* ── ABOUT ── */
+  .river-about { background: var(--cream); }
+  .river-about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .river-about-text p {
+    margin-top: 1.6rem;
+    font-size: 1.02rem; font-weight: 300;
+    color: var(--text-muted); line-height: 1.9;
+  }
+  .river-about-img {
+    aspect-ratio: 4/5; overflow: hidden; border-radius: 2px;
+  }
+  .river-about-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── GALLERY ── */
+  .river-gallery {
+    padding: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    height: 340px; gap: 2px;
+  }
+  .river-gallery figure { overflow: hidden; margin: 0; height: 100%; }
+  .river-gallery figure img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s, filter 0.5s; filter: saturate(0.85);
+  }
+  .river-gallery figure:hover img { transform: scale(1.08); filter: saturate(1.1); }
+
+  /* ── PROGRAMS (tour cards) ── */
+  .programs-section { background: var(--white); }
+  .programs-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem; max-width: 1100px; margin-left: auto; margin-right: auto;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .programs-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px; background: var(--sand);
+  }
+  .tour-card {
+    background: var(--white);
+    padding: 2.5rem;
+    display: flex; flex-direction: column;
+    transition: background 0.3s;
+  }
+  .tour-card:hover { background: var(--cream); }
+  .tour-card-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .tour-badge {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.35rem 0.75rem; border-radius: 1px;
+  }
+  .badge-medveditsa { background: rgba(26,74,92,0.1); color: var(--river); }
+  .tour-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--text);
+    margin-bottom: 0.8rem; line-height: 1.2;
+  }
+  .tour-card p {
+    font-size: 0.88rem; font-weight: 300; color: var(--text-muted);
+    line-height: 1.7; flex: 1;
+  }
+  .tour-meta {
+    margin-top: 1.8rem; display: flex; gap: 1.5rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--sand);
+  }
+  .tour-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--stone); }
+  .tour-cta {
+    margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--river); text-decoration: none; transition: gap 0.2s;
+  }
+  .tour-cta:hover { gap: 0.9rem; }
+
+  /* ── CTA BLOCK ── */
+  .river-cta-wrap { max-width: 1100px; margin: 0 auto; padding: 0 2rem 7rem; }
+  .river-cta {
+    padding: 2.5rem 2.8rem;
+    background: var(--river);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+  .river-cta-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem;
+  }
+  .river-cta-text p { font-size: 0.87rem; font-weight: 300; color: var(--river-pale); line-height: 1.6; }
+  .river-cta-btn {
+    display: inline-block;
+    background: var(--white); color: var(--river);
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.85rem 2rem; border-radius: 2px; text-decoration: none; white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .river-cta-btn:hover { background: var(--sand); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--text); padding: 4rem 4rem 2rem; }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem;
+    padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem;
+  }
+  .footer-brand p { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.45); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+  .footer-col h5 {
+    font-family: 'Unbounded', sans-serif; font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(168,216,232,0.5); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.7rem; }
+  .footer-col ul a { font-size: 0.85rem; font-weight: 300; color: rgba(253,250,245,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--river-pale); }
+  .footer-col ul a.current { color: var(--river-pale); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(253,250,245,0.25); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .river-hero { padding: 8rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .facts-strip { grid-template-columns: 1fr 1fr; padding: 2rem 1rem; }
+    .river-about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .river-gallery { grid-template-columns: repeat(3, 1fr); height: 200px; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 500px) {
+    .facts-strip { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="img/logo.png" alt="Сплав">
+    <span class="logo-text">Сплав</span>
+  </a>
+  <ul id="nav-desktop-menu">
+    <li><a href="index.html#home" data-nav="home">Главная</a></li>
+    <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+    <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+    <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+    <li><a href="chat.html">Чат</a></li>
+    <li><a href="auth.html" class="nav-login" id="nav-login-link">Войти</a></li>
+  </ul>
+  <div class="nav-mobile-panel" id="nav-menu">
+    <div class="nav-mobile-header">
+      <span class="nav-mobile-title">Меню</span>
+      <button class="nav-mobile-close" id="nav-mobile-close" aria-label="Закрыть меню">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="4" x2="4" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul class="nav-mobile-links">
+      <li><a href="index.html#home" data-nav="home">Главная</a></li>
+      <li><a href="index.html#rivers" data-nav="rivers">Реки</a></li>
+      <li><a href="index.html#tours" data-nav="tours">Сплавы</a></li>
+      <li><a href="index.html#reviews" data-nav="reviews">Отзывы</a></li>
+      <li><a href="chat.html">Чат</a></li>
+      <li><a href="auth.html" class="nav-login">Войти</a></li>
+    </ul>
+  </div>
+  <div class="nav-indicator" id="nav-indicator"></div>
+  <button class="nav-burger" id="nav-burger" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay"></div>
+</nav>
+
+<!-- HERO -->
+<div class="river-hero">
+  <div class="river-hero-inner">
+    <p class="river-hero-label">Река Медведица</p>
+    <h1>Быстрая река<br>с <em>характером</em></h1>
+    <p class="river-hero-sub">Перекаты, крутые берега и живое течение — Медведица подходит тем, кто хочет почувствовать реку в движении. Один из двух маршрутов, по которым мы водим сплавы в Саратовской области.</p>
+    <div class="river-hero-actions">
+      <a href="index.html#booking" class="btn-primary">Записаться на сплав</a>
+      <a href="#programs" class="btn-outline">Программы по Медведице</a>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK FACTS -->
+<div class="facts-strip">
+  <div class="fact-item"><div class="fact-value">Быстрое</div><div class="fact-label">Течение</div></div>
+  <div class="fact-item"><div class="fact-value">Перекаты</div><div class="fact-label">Рельеф русла</div></div>
+  <div class="fact-item"><div class="fact-value">2–3 дня</div><div class="fact-label">Длительность</div></div>
+  <div class="fact-item"><div class="fact-value">Июнь–август</div><div class="fact-label">Сезон</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="river-about">
+  <div class="river-about-inner">
+    <div class="river-about-text">
+      <p class="section-tag">О реке</p>
+      <h2>Своенравная<br>Медведица</h2>
+      <p>Медведица — быстрая и своенравная река с перекатами и крутыми берегами. В отличие от медленного и величественного Хопра, здесь течение ощущается всё время: сплав получается динамичным, с постоянной работой веслом и лёгким адреналином на перекатах.</p>
+      <p>Берега Медведицы — это смешанные леса, песчаные обрывы и открытые поляны для стоянок. Для любителей более активного отдыха на воде это один из лучших маршрутов региона.</p>
+      <p>Мы предлагаем как короткий двухдневный формат для тех, кто пробует сплав впервые, так и полный трёхдневный маршрут для тех, кто хочет более насыщенного путешествия.</p>
+    </div>
+    <div class="river-about-img">
+      <img src="img/splav1.jpg" alt="Сплав по Медведице">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="river-gallery">
+  <figure><img src="img/splav3.jpg" alt="Медведица, вид с воды"></figure>
+  <figure><img src="img/splav5.jpg" alt="Берега Медведицы"></figure>
+  <figure><img src="img/splav2.jpg" alt="Участники сплава по Медведице"></figure>
+</div>
+
+<!-- PROGRAMS -->
+<section class="programs-section" id="programs">
+  <div class="programs-header">
+    <div>
+      <p class="section-tag">Программы по Медведице</p>
+      <h2>Выберите<br>формат</h2>
+    </div>
+  </div>
+  <div class="programs-grid">
+
+    <div class="tour-card">
+      <div class="tour-card-head">
+        <span class="tour-badge badge-medveditsa">Медведица</span>
+      </div>
+      <h3>Выходной на Медведице</h3>
+      <p>Идеальный вариант для тех, кто хочет попробовать сплав впервые. Два дня активного движения по реке, вечер у костра и возвращение домой.</p>
+      <div class="tour-meta">
+        <div class="tour-meta-item">2 дня</div>
+        <div class="tour-meta-item">Байдарка / каяк</div>
+      </div>
+      <a href="index.html#booking" class="tour-cta">Записаться &#8594;</a>
+    </div>
+
+    <div class="tour-card">
+      <div class="tour-card-head">
+        <span class="tour-badge badge-medveditsa">Медведица</span>
+      </div>
+      <h3>Медведица — полный маршрут</h3>
+      <p>Для любителей более динамичного сплава. Три дня по самым живописным и быстрым участкам реки, ночёвки на песчаных берегах.</p>
+      <div class="tour-meta">
+        <div class="tour-meta-item">3 дня</div>
+        <div class="tour-meta-item">Байдарка / каяк</div>
+      </div>
+      <a href="index.html#booking" class="tour-cta">Записаться &#8594;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="river-cta-wrap">
+  <div class="river-cta">
+    <div class="river-cta-text">
+      <h3>Готовы на Медведицу?</h3>
+      <p>Оставьте заявку — ответим в течение дня и поможем выбрать даты.</p>
+    </div>
+    <a href="index.html#booking" class="river-cta-btn">Записаться на сплав</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <img src="img/logo.png" alt="СПЛАВ" style="width:48px;height:48px;">
+        <span class="logo-text">Сплав</span>
+      </a>
+      <p>Сплавы по рекам Медведице и Хопру. Саратовская область.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Сплавы</h5>
+      <ul>
+        <li><a href="medveditsa.html" class="current">Медведица</a></li>
+        <li><a href="hoper.html">Хопёр</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Информация</h5>
+      <ul>
+        <li><a href="index.html#rivers">О реках</a></li>
+        <li><a href="index.html#calendar">Сезоны</a></li>
+        <li><a href="index.html#about">Снаряжение</a></li>
+        <li><a href="index.html#reviews">Отзывы</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Контакты</h5>
+      <ul>
+        <li><a href="tel:+79173231519">+7 (917) 323-15-19</a></li>
+        <li><a href="mailto:info@saratovsplav.ru">info@saratovsplav.ru</a></li>
+        <li><a href="https://vk.com/pro_splav" rel="noopener noreferrer" target="_blank">ВКонтакте</a></li>
+        <li><a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank">Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Сплав. Все права защищены.</span>
+    <span><a href="privacy.html" style="color:inherit;opacity:0.7;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Политика конфиденциальности</a></span>
+  </div>
+</footer>
+
+<script src="js/nav-mobile.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/nav.js"></script>
+<script src="js/site-tracker.js"></script>
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>
