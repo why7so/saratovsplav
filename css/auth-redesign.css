@@ -1,0 +1,60 @@
+/* Quiet, consistent authentication screen for the river site. */
+body.auth-redesign {
+  --river: #315d4d;
+  --river-light: #547b69;
+  --river-pale: #dbe8dc;
+  --sand: #e9ede6;
+  --sand-dark: #b8c5b8;
+  --cream: #f3f5f0;
+  --stone: #626c64;
+  --text: #202722;
+  --text-muted: #626c64;
+  --white: #fff;
+  --accent: #315d4d;
+  --border: #dfe4dc;
+  --input-bg: #f8f8f4;
+  padding-top: 5rem;
+  background: #f3f5f0;
+  color: var(--text);
+  font-family: "Source Sans 3", sans-serif;
+}
+.auth-redesign *, .auth-redesign *::before, .auth-redesign *::after { font-family: "Source Sans 3", sans-serif; }
+.auth-redesign nav { background: rgba(32,48,39,.96); border: 0; box-shadow: 0 1px 18px rgba(18,32,24,.12); }
+.auth-redesign .logo-text { color: #fff; font-weight: 600; }
+.auth-redesign nav > ul a { color: rgba(255,255,255,.82); }
+.auth-redesign nav > ul a:hover, .auth-redesign nav > ul a.active { color: #fff; }
+.auth-redesign .nav-indicator { background: #d8e5d8; border-radius: 0; }
+.auth-redesign .nav-login { border-radius: 0; border-color: rgba(255,255,255,.55); color: #fff !important; }
+.auth-redesign .nav-login:hover { background: rgba(255,255,255,.12); }
+.auth-redesign .nav-burger span { background: #fff; }
+.auth-redesign .nav-mobile-panel { background: #203027; }
+.auth-redesign .nav-mobile-title, .auth-redesign .nav-mobile-links a { color: #fff; }
+.auth-redesign .main { padding: 3rem 1.25rem 4rem; }
+.auth-redesign .card { max-width: 440px; padding: clamp(1.5rem, 5vw, 2.5rem); border: 1px solid var(--border); border-radius: 2px; box-shadow: 0 16px 48px rgba(32,39,34,.07); }
+.auth-redesign .card-title, .auth-redesign .review-heading { font-family: "Source Sans 3", sans-serif; font-weight: 600; letter-spacing: -.025em; }
+.auth-redesign .card-title { font-size: 1.75rem; }
+.auth-redesign .card-sub { font-size: .95rem; }
+.auth-redesign .auth-tabs { background: var(--cream); border-radius: 2px; }
+.auth-redesign .auth-tab { min-height: 44px; border-radius: 1px; font-size: .95rem; }
+.auth-redesign .auth-tab.active { color: var(--river); box-shadow: none; }
+.auth-redesign .field label, .auth-redesign .form-row label { color: var(--stone); letter-spacing: .035em; }
+.auth-redesign .field input, .auth-redesign .form-row select, .auth-redesign .form-row textarea,
+.auth-redesign .otp-inputs input { border-radius: 2px; border-color: var(--border); background: #fff; font-size: 1rem; }
+.auth-redesign .field input:focus, .auth-redesign .form-row select:focus, .auth-redesign .form-row textarea:focus,
+.auth-redesign .otp-inputs input:focus { border-color: var(--river); box-shadow: 0 0 0 3px rgba(49,93,77,.13); }
+.auth-redesign .btn-submit { min-height: 48px; border-radius: 2px; background: var(--river); font-size: .98rem; }
+.auth-redesign .btn-submit:hover { background: #244938; }
+.auth-redesign #vk-login-container button, .auth-redesign #vk-login-container [role="button"], .auth-redesign #vk-login-container a { border-radius: 2px !important; }
+.auth-redesign .user-badge { border-radius: 2px; }
+.auth-redesign .logout-link { border-radius: 2px; }
+.auth-redesign a:focus-visible, .auth-redesign button:focus-visible, .auth-redesign input:focus-visible, .auth-redesign select:focus-visible, .auth-redesign textarea:focus-visible { outline: 3px solid #315d4d; outline-offset: 2px; }
+@media (max-width: 768px) {
+  .auth-redesign nav { min-height: 68px; }
+  .auth-redesign .nav-mobile-panel { background: #203027; }
+  .auth-redesign .nav-mobile-links a { color: rgba(255,255,255,.88); }
+  .auth-redesign .nav-mobile-links .nav-login { color: #fff !important; border-color: rgba(255,255,255,.55); }
+}
+@media (max-width: 480px) {
+  .auth-redesign .main { padding: 1.5rem 1rem 3rem; }
+  .auth-redesign .card { padding: 1.5rem 1.2rem; }
+}

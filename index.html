@@ -7,8 +7,8 @@
 <title>Сплав</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" class="site-icon" href="img/ico.png" type="image/x-icon">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Unbounded:wght@300;400;700&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/nav.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -887,8 +887,9 @@
     nav { padding: 0.8rem; }
   }
 </style>
+<link rel="stylesheet" href="css/home-redesign.css">
 </head>
-<body>
+<body class="home-redesign">
 
 <nav>
   <a href="#" class="logo">
@@ -931,7 +932,7 @@
   <div class="hero-texture"></div>
   <div class="hero-content">
     <p class="hero-label">Речные сплавы</p>
-    <h1>Живая<br>вода <em>двух</em><br>рек</h1>
+    <h1>Живая вода<br><em>двух рек</em></h1>
     <p class="hero-sub">Сплавы по Медведице и Хопру каждое лето — июнь, июль, август. Дикая природа Поволжья, тёплая вода и незабываемые вечера у костра.</p>
     <div class="hero-actions">
       <a href="#tours" class="btn-primary">Выбрать сплав</a>
@@ -948,6 +949,22 @@
       <h2>Медведица<br>и Хопёр</h2>
       <p>Две реки — два совершенно разных характера. Медведица — быстрая и своенравная, с перекатами и крутыми берегами. Хопёр — медленный и величественный, с заливными лугами и первозданными лесами.</p>
       <p>Вместе они образуют уникальный сплавной регион Поволжья, где можно проводить сплавы для любого уровня подготовки — от первого сплава в жизни до многодневных экспедиций.</p>
+    </div>
+    <div class="rivers-cards">
+      <a class="river-card" href="medveditsa.html">
+        <img src="img/splav1.jpg" alt="Вид на реку с байдарки">
+        <span class="river-card-overlay">
+          <span class="river-card-tag">Для первого сплава</span>
+          <span class="river-card-title">Медведица <span aria-hidden="true">↗</span></span>
+        </span>
+      </a>
+      <a class="river-card" href="hoper.html">
+        <img src="img/splav5.jpg" alt="Путешественники на реке Хопёр">
+        <span class="river-card-overlay">
+          <span class="river-card-tag">Тихое течение</span>
+          <span class="river-card-title">Хопёр <span aria-hidden="true">↗</span></span>
+        </span>
+      </a>
     </div>
   </div>
 </section>
@@ -1105,20 +1122,19 @@
 <!-- BOOKING -->
 <div class="booking-section" id="booking">
   <div class="booking-text">
-    <p class="section-tag">Бронирование</p>
     <h2>Готовы<br>к воде?</h2>
     <p>Заполните форму — свяжемся с вами в течение нескольких часов, ответим на все вопросы и подберём оптимальный сплав.</p>
     <div class="booking-contacts">
       <div class="contact-item">
-        <div class="contact-icon">📞</div>
+        <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2 1.5a14 14 0 0 0 5.5 5.5L15 14l5 2v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3 6.2 2 2 0 0 1 5 4Z"/></svg></div>
         <a href="tel:+79034567890" style="color:inherit; text-decoration:none;">+7 (903) 456-78-90</a>
       </div>
       <div class="contact-item">
-        <div class="contact-icon">✉️</div>
-        <a href="mailto:info@dikayavoda.ru" style="color:inherit; text-decoration:none;">info@dikayavoda.ru</a>
+        <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m4 7 8 6 8-6"/></svg></div>
+        <a href="mailto:info@saratovsplav.ru" style="color:inherit; text-decoration:none;">info@saratovsplav.ru</a>
       </div>
       <div class="contact-item">
-        <div class="contact-icon">💬</div>
+        <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-5.5a7.5 7.5 0 1 1 17-4Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg></div>
         <span>Telegram: <a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank" class="invisible-link">@cplavsmariei</a></span>
       </div>
     </div>
@@ -1232,7 +1248,7 @@
       <h5>Контакты</h5>
       <ul>
         <li><a href="tel:+79173231519">+7 (917) 323-15-19</a></li>
-        <li><a href="mailto:info@dikayavoda.ru">info@saratovsplav.ru</a></li>
+        <li><a href="mailto:info@saratovsplav.ru">info@saratovsplav.ru</a></li>
         <li><a href="https://vk.com/pro_splav" rel="noopener noreferrer" target="_blank">ВКонтакте</a></li>
         <li><a href="https://t.me/cplavsmariei" rel="noopener noreferrer" target="_blank">Telegram</a></li>
       </ul>

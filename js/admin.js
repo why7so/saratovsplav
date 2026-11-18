@@ -874,7 +874,7 @@ function renderSchedulePreview(rows) {
     if (r._error) {
       return '<tr class="row-error">' +
         '<td class="cell-muted" data-label="#">' + r.rowNum + '</td>' +
-        '<td data-label="Дата"><span style="color:var(--accent)">⚠ ' + esc(String(r.rawDate || '—')) + '</span></td>' +
+        '<td data-label="Дата"><span style="color:var(--accent)">Ошибка: ' + esc(String(r.rawDate || '—')) + '</span></td>' +
         '<td data-label="Река">' + esc(String(r.rawRiver || '—')) + '</td>' +
         '<td data-label="Кол-во дней">' + esc(String(r.rawDays  || '—')) + '</td>' +
         '<td data-label="Формат">' + esc(String(r.rawFormat|| '—')) + '</td>' +
@@ -887,7 +887,7 @@ function renderSchedulePreview(rows) {
       '<td class="cell-muted" data-label="#">' + (i + 1) + '</td>' +
       '<td class="cell-date" data-label="Дата">' +
         (r._dateUnresolved
-          ? '<span style="color:var(--accent)" title="Дата не распознана, сохранена как есть">⚠ ' + esc(String(r.rawDate || '—')) + '</span>'
+          ? '<span style="color:var(--accent)" title="Дата не распознана, сохранена как есть">Дата: ' + esc(String(r.rawDate || '—')) + '</span>'
           : fmtDateRange(r.trip_date, r.trip_date_end)) +
       '</td>' +
       '<td class="cell-strong" data-label="Река">' + esc(r.river) + '</td>' +

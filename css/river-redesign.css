@@ -1,0 +1,138 @@
+.river-redesign {
+  --page: #f8f8f4;
+  --paper: #fff;
+  --ink: #202722;
+  --muted: #626c64;
+  --line: #dfe4dc;
+  --river: #315d4d;
+  --river-light: #547b69;
+  --river-pale: #dbe8dc;
+  --forest: #263d33;
+  --cream: #f3f5f0;
+  --sand: #e9ede6;
+  --sand-dark: #d4dbd1;
+  --stone: #6b766e;
+  --accent: #a96845;
+  background: var(--page);
+  color: var(--ink);
+  font: 400 16px/1.6 "Source Sans 3", sans-serif;
+  overflow-x: clip;
+}
+.river-redesign *, .river-redesign *::before, .river-redesign *::after { box-sizing: border-box; }
+.river-redesign, .river-redesign * { font-family: "Source Sans 3", sans-serif; }
+.river-redesign a { text-underline-offset: .2em; }
+.river-redesign a:focus-visible, .river-redesign button:focus-visible { outline: 3px solid #315d4d; outline-offset: 3px; }
+.river-redesign h1, .river-redesign h2, .river-redesign h3, .river-redesign h4,
+.river-redesign .logo-text, .river-redesign .fact-value {
+  font-family: "Source Sans 3", sans-serif;
+  font-optical-sizing: auto;
+  letter-spacing: -.025em;
+}
+.river-redesign nav {
+  min-height: 76px;
+  padding: 0 max(1.25rem, calc((100vw - 1200px) / 2));
+  background: rgba(32, 48, 39, .94);
+  border: 0;
+  box-shadow: 0 1px 18px rgba(18,32,24,.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.river-redesign .logo-text { color: #fff; font-size: 1.35rem; font-weight: 500; }
+.river-redesign nav > ul { gap: clamp(1rem, 2.2vw, 2rem); }
+.river-redesign nav > ul a { color: rgba(255,255,255,.82); font: 500 .8rem/1.3 "Source Sans 3", sans-serif; letter-spacing: .015em; text-transform: none; }
+.river-redesign nav > ul a:hover, .river-redesign nav > ul a.active { color: #fff; }
+.river-redesign .nav-indicator { height: 2px; background: #d8e5d8; border-radius: 0; }
+.river-redesign .nav-login { border: 1px solid rgba(255,255,255,.5); border-radius: 0; color: #fff !important; }
+.river-redesign .nav-login:hover { background: rgba(255,255,255,.12); }
+.river-redesign .nav-burger span { background: #fff; }
+.river-redesign .river-hero {
+  min-height: min(650px, 78svh);
+  display: flex;
+  align-items: flex-end;
+  padding: 9rem max(1.25rem, calc((100vw - 1200px) / 2)) 4.5rem;
+  border: 0;
+  color: #fff;
+  background-color: #263d33;
+  background-image: linear-gradient(90deg, rgba(17,31,24,.76), rgba(17,31,24,.3) 75%), linear-gradient(0deg, rgba(17,31,24,.44), transparent 58%), url("../img/splav5.jpg");
+  background-size: cover;
+  background-position: center 56%;
+}
+.river-medveditsa .river-hero { background-image: linear-gradient(90deg, rgba(17,31,24,.76), rgba(17,31,24,.3) 75%), linear-gradient(0deg, rgba(17,31,24,.44), transparent 58%), url("../img/splav1.jpg"); background-position: center 54%; }
+.river-redesign .river-hero::before { content: none; }
+.river-redesign .river-hero-inner { max-width: 760px; }
+.river-redesign .river-hero-label, .river-redesign .section-tag {
+  font: 600 .8rem/1.4 "Source Sans 3", sans-serif;
+  letter-spacing: .04em;
+  text-transform: none;
+  color: #e3ece3;
+}
+.river-redesign .river-hero-label::before { background: #d8e5d8; }
+.river-redesign .river-hero h1 { margin-bottom: 1rem; color: #fff; font-size: clamp(3.2rem, 6vw, 5.5rem); font-weight: 500; line-height: 1; letter-spacing: -.045em; }
+.river-redesign .river-hero h1 em { color: #dce9dc; font-weight: 600; }
+.river-redesign .river-hero-sub { max-width: 600px; color: rgba(255,255,255,.9); font-size: 1rem; font-weight: 400; line-height: 1.7; }
+.river-redesign .river-hero-actions { gap: .75rem; }
+.river-redesign .river-hero-actions .btn-primary, .river-redesign .river-hero-actions .btn-outline {
+  display: inline-flex; align-items: center; min-height: 48px; padding: .8rem 1.2rem;
+  border-radius: 2px; font: 600 .9rem/1.2 "Source Sans 3", sans-serif; letter-spacing: 0; text-transform: none;
+}
+.river-redesign .river-hero-actions .btn-primary { color: #fff; background: var(--river); }
+.river-redesign .river-hero-actions .btn-primary:hover { background: #244938; }
+.river-redesign .river-hero-actions .btn-outline { color: #fff; border: 1px solid rgba(255,255,255,.8); }
+.river-redesign .river-hero-actions .btn-outline:hover { color: #fff; background: rgba(255,255,255,.14); }
+.river-redesign .facts-strip { max-width: 1200px; padding: 1.5rem 0; gap: 0; background: transparent; border-bottom: 1px solid var(--line); }
+.river-redesign .fact-item { padding: 1rem 1.4rem; border-right: 1px solid var(--line); border-radius: 0; background: transparent; text-align: left; }
+.river-redesign .fact-item:last-child { border-right: 0; }
+.river-redesign .fact-value { color: var(--ink); font-size: 1.35rem; font-weight: 500; }
+.river-redesign .fact-label { color: var(--muted); font-size: .88rem; }
+.river-redesign section { padding: clamp(4.5rem, 9vw, 7rem) max(1.25rem, calc((100vw - 1200px) / 2)); }
+.river-redesign .river-about { background: var(--paper); }
+.river-redesign .river-about-inner { max-width: 1200px; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(2rem, 6vw, 6rem); }
+.river-redesign .section-tag { margin-bottom: .8rem; color: var(--river); }
+.river-redesign .section-tag::before { content: none; }
+.river-redesign h2 { color: var(--ink); font-size: clamp(2.3rem, 4.5vw, 4rem); font-weight: 500; line-height: 1.05; }
+.river-redesign .river-about-text p:not(.section-tag) { color: var(--muted); font-size: 1rem; font-weight: 400; line-height: 1.75; }
+.river-redesign .river-about-img { aspect-ratio: 4/3; border-radius: 0; }
+.river-redesign .river-gallery { height: clamp(220px, 28vw, 360px); gap: 4px; }
+.river-redesign .river-gallery figure { border-radius: 0; }
+.river-redesign .river-gallery img { filter: saturate(.75); }
+.river-redesign .programs-section { background: var(--page); }
+.river-redesign .programs-header, .river-redesign .programs-grid { max-width: 1200px; }
+.river-redesign .programs-header { margin-bottom: 2.5rem; }
+.river-redesign .programs-grid { gap: 1px; background: var(--line); }
+.river-redesign .tour-card { padding: clamp(1.4rem, 3vw, 2rem); border-radius: 0; background: #fff; }
+.river-redesign .tour-card h3 { color: var(--ink); font-size: 1.5rem; font-weight: 500; }
+.river-redesign .tour-card p { color: var(--muted); font-size: .94rem; font-weight: 400; }
+.river-redesign .tour-badge { padding: 0; border-radius: 0; background: transparent; color: var(--river); font: 600 .8rem/1.4 system-ui,sans-serif; letter-spacing: .03em; }
+.river-redesign .tour-meta { border-color: var(--line); }
+.river-redesign .tour-cta { min-height: 44px; font-size: .9rem; letter-spacing: 0; text-transform: none; }
+.river-redesign .river-cta-wrap { max-width: 1200px; padding: 0 1.25rem 6rem; }
+.river-redesign .river-cta { padding: clamp(1.5rem, 4vw, 3rem); border-radius: 0; background: var(--forest); }
+.river-redesign .river-cta-text h3 { color: #fff; font-size: 2rem; font-weight: 500; }
+.river-redesign .river-cta-text p { color: rgba(255,255,255,.82); font-size: .95rem; font-weight: 400; }
+.river-redesign .river-cta-btn { min-height: 48px; display: inline-flex; align-items: center; border-radius: 2px; background: var(--river); color: #fff; font: 600 .9rem/1.2 "Source Sans 3",sans-serif; text-transform: none; }
+.river-redesign .river-cta-btn:hover { background: #244938; }
+.river-redesign footer { background: #202c25; }
+.river-redesign .footer-col h5 { color: #d2dfd3; font-family: "Source Sans 3",sans-serif; letter-spacing: .04em; }
+.river-redesign .footer-col ul a { color: rgba(255,255,255,.76); font-weight: 400; }
+.river-redesign .footer-col ul a:hover { color: #fff; }
+.river-redesign .footer-brand p, .river-redesign .footer-bottom { color: rgba(255,255,255,.68); font-weight: 400; }
+
+@media (max-width: 768px) {
+  .river-redesign nav { min-height: 68px; }
+  .river-redesign .nav-mobile-panel { background: var(--paper); }
+  .river-redesign .nav-mobile-title { color: var(--ink); }
+  .river-redesign .nav-mobile-links a { min-height: 48px; color: var(--ink); text-transform: none; letter-spacing: 0; }
+  .river-redesign .nav-mobile-links .nav-login { color: var(--river) !important; }
+  .river-redesign .river-hero { min-height: min(620px, 82svh); padding: 8rem 1.25rem 3rem; background-position: 58% center; }
+  .river-redesign .river-about-inner { grid-template-columns: 1fr; }
+  .river-redesign .river-about-img { order: -1; aspect-ratio: 1.3; }
+  .river-redesign .facts-strip { margin: 0 1.25rem; grid-template-columns: repeat(2,1fr); }
+  .river-redesign .fact-item:nth-child(2) { border-right: 0; }
+  .river-redesign .fact-item:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .river-redesign .river-gallery { grid-template-columns: 1fr 1fr; }
+  .river-redesign .river-gallery figure:last-child { display: none; }
+  .river-redesign .river-cta { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+}
+@media (prefers-reduced-transparency: reduce) {
+.river-redesign nav { background: #203027; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
