@@ -85,7 +85,7 @@ html { scroll-behavior: smooth; overflow-x: clip; }
   background:
     linear-gradient(90deg, rgba(17,31,24,.76) 0%, rgba(17,31,24,.3) 58%, rgba(17,31,24,.06) 100%),
     linear-gradient(0deg, rgba(17,31,24,.44), transparent 46%),
-    url("../img/splav5.jpg") center 56% / cover no-repeat;
+    url("../img/hero-kayak.jpg") center 56% / cover no-repeat;
 }
 .home-redesign .hero-texture { display: none; }
 .home-redesign .hero-content { max-width: 680px; }
@@ -270,7 +270,7 @@ html { scroll-behavior: smooth; overflow-x: clip; }
   .home-redesign .hero-bg {
     background:
       linear-gradient(180deg, rgba(25,20,18,.52), rgba(25,20,18,.55)),
-      url("../img/splav5.jpg") center 56% / cover no-repeat;
+      url("../img/hero-kayak.jpg") center 56% / cover no-repeat;
   }
   .home-redesign .hero-label { display: none; }
   .home-redesign .hero-content { width: 100%; max-width: 620px; }
